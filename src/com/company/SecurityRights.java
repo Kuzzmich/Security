@@ -1,7 +1,5 @@
 package com.company;
 
-
-
 /**
  * Created by tokhchukov on 09.03.2016.
  */

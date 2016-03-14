@@ -9,11 +9,12 @@ public class SecurityRights {
     private boolean create=false;
     private boolean update=false;
     private boolean delete=false;
+    private boolean current=true;
     public SecurityRights(){}
-    public SecurityRights(boolean creatingright, boolean updatingright,boolean deletingrigth) {
-        create=creatingright;
-        update=updatingright;
-        delete=deletingrigth;
+    public SecurityRights(boolean creatingRight, boolean updatingRight,boolean deletingRigth, boolean currentRules) {
+        create=creatingRight;
+        update=updatingRight;
+        delete=deletingRigth;
     }
     //----------getters generated----------
 
@@ -30,7 +31,9 @@ public class SecurityRights {
         return delete;
     }
 
-
+    public boolean isCurrent() {
+        return current;
+    }
     //--------setters generated----------
 
     public void setCreate(boolean create) {
@@ -45,12 +48,17 @@ public class SecurityRights {
         this.delete = delete;
     }
 
+    public void setCurrent(boolean current) {
+        this.current = current;
+    }
+
     @Override
     public String toString() {
         return "SecurityRights{" +
                 "create=" + create +
                 ", update=" + update +
                 ", delete=" + delete +
+                ", is rurrent rule=" + current+
                 '}';
     }
 }

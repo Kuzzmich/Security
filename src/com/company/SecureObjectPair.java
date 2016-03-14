@@ -5,7 +5,7 @@ package com.company;
  */
 public class SecureObjectPair {
     private ISecureObj first;
-    private ISecureObj second;
+    private ISecureObj  second;
 
 public SecureObjectPair(){}
     public SecureObjectPair(ISecureObj frst, ISecureObj scnd)

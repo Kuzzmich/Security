@@ -6,7 +6,9 @@ package com.company;
 public class Group extends Deanery {
     private String name;
     private int quantity;
-
+    {
+        name ="default";
+    }
     public Group(){}
 
     public Group(String nameOfGr, int quantOfStudents){

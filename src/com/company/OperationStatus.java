@@ -5,6 +5,7 @@ package com.company;
  */
 public enum OperationStatus {
     ST_SUCCSSFULL,
+    ST_FAILURE,
     ST_RESTRICTED_BY_DEFAULT,
     ST_RESTRICTED_BY_CURRENT_RULES
 }

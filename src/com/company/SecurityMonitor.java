@@ -1,5 +1,6 @@
 package com.company;
 
+import com.sun.istack.internal.NotNull;
 import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 
 import java.io.*;
@@ -26,6 +27,8 @@ public class SecurityMonitor {
         container=cont;
     }
 
+    //-------------Serialization and deserialization----------------
+
     public void loadDefaultRules(File defaultrules)throws SerializationException,ClassNotFoundException{
         try(FileInputStream stream=new FileInputStream(defaultrules)){
             ObjectInputStream baseinput=new ObjectInputStream(stream);
@@ -37,8 +40,8 @@ public class SecurityMonitor {
     }
 
 
-    public void loadCurrentRules(File currRules)throws SerializationException,ClassNotFoundException{
-        try(FileInputStream outstream=new FileInputStream(currRules)){
+    public void loadCurrentRules(File currrules)throws SerializationException,ClassNotFoundException{
+        try(FileInputStream outstream=new FileInputStream(currrules)){
             ObjectInputStream currinput=new ObjectInputStream(outstream);
             baseRules=(HashMap<SecureObjectPair,SecurityRights>) currinput.readObject();
         }catch (IOException e){
@@ -56,8 +59,8 @@ public class SecurityMonitor {
         }
     }
 
-    public void saveCurrentRules(File currRules) throws IOException{
-        try (FileOutputStream outstream=new FileOutputStream(currRules)){
+    public void saveCurrentRules(File currrules) throws IOException{
+        try (FileOutputStream outstream=new FileOutputStream(currrules)){
             ObjectOutputStream curroutput=new ObjectOutputStream(outstream);
             curroutput.writeObject(baseRules);
         } catch (IOException e) {
@@ -65,30 +68,95 @@ public class SecurityMonitor {
         }
     }
 
-    public OperationStatus createRequest(SecureObjectRoot from, SecureObjectRoot target){
-        try {
-            if (from.getClass()==Journal.class){
 
-                Class.forName(Journal.class.getName());
+
+    //------------------Requests------------------
+
+    //запрос на создание объекта
+    public void createRequest(@NotNull SecureObjectRoot from, @NotNull SecureObjectRoot target)
+            throws RestrictedByCurrentRulesException, RestrictedByDefaultRulesException{
+        try {
+            SecurityRights rights=getRights(from,target);
+            if (rights.isCreate()){ //проверка на разрешенность создания
+                container.addObject(target);
+                target.create();
             }
-            else
-            {
-                System.out.println("nah " +from.getClass().getName()+" "+target.getClass().getName());
+            else {
+                if (rights.isCurrent())throw new RestrictedByCurrentRulesException();
+                else throw new RestrictedByDefaultRulesException();
             }
-        }
-        catch (Exception e){
+        } catch (SCClassNotDescribedException e) {
             e.printStackTrace();
         }
-        return OperationStatus.ST_RESTRICTED_BY_CURRENT_RULES;
     }
-    public OperationStatus addCurrentRule(SecureObjectPair pair, SecurityRights rights){
-        return OperationStatus.ST_SUCCSSFULL;
+     // запрос на удаление объекта
+     public void deleteRequest(@NotNull SecureObjectRoot from, @NotNull SecureObjectRoot target)
+             throws RestrictedByCurrentRulesException, RestrictedByDefaultRulesException{
+         try {
+             SecurityRights rights=getRights(from,target);
+             if (rights.isDelete()){ //проверка на разрешенность удаления
+                 target.delete();
+                 container.removeObject(target);
+             }
+             else {
+                 if (rights.isCurrent())throw new RestrictedByCurrentRulesException();
+                 else throw new RestrictedByDefaultRulesException();
+             }
+         } catch (SCClassNotDescribedException e) {
+             e.printStackTrace();
+         }
+     }
+
+    //запрос на запуск метода
+    public void methodExecRequest(@NotNull SecureObjectRoot from, @NotNull SecureObjectRoot target)
+            throws RestrictedByCurrentRulesException, RestrictedByDefaultRulesException{
+        try {
+            SecurityRights rights=getRights(from,target);
+            if (!rights.isUpdate()){ //проверка на разрешенность удаления
+                if (rights.isCurrent())throw new RestrictedByCurrentRulesException();
+                else throw new RestrictedByDefaultRulesException();
+            }
+        } catch (SCClassNotDescribedException e) {
+            e.printStackTrace();
+        }
     }
-   /* public SecurityRights getRights(ISecureObj from, ISecureObj to) throws SCClassNotDescibedException{
-            SecureObjectRoot r=new
 
 
-    }*/
+
+
+    //добавление и удаление текущих правил для объктов
+    public OperationStatus addCurrentRule(SecureObjectPair pair,SecurityRights rights){
+        return currentRules.put(pair,rights)==null?OperationStatus.ST_SUCCSSFULL:OperationStatus.ST_FAILURE;
+    }
+    public OperationStatus removeCurrentRule(SecureObjectPair pair){
+        return currentRules.remove(pair)==null?OperationStatus.ST_SUCCSSFULL:OperationStatus.ST_FAILURE;
+    }
+
+    //Получить общие права доступа
+   public SecurityRights getRights(ISecureObj from, ISecureObj to) throws SCClassNotDescribedException {
+       Class<?> fromClass=from.getClass();  //получение классов для создания временных объектов, предназначенных
+       Class<?> toClass=to.getClass();      //для получение информации из базовой таблицы
+       try {
+           SecureObjectRoot fromObject=(SecureObjectRoot)fromClass.newInstance();
+           SecureObjectRoot toObject=(SecureObjectRoot)toClass.newInstance();
+
+           SecureObjectPair defaultPair=new SecureObjectPair(); //создан из временных объектов для получения базовых прав
+           SecureObjectPair currentPair=new SecureObjectPair(from,to);//для получения текущих прав
+
+          if (currentRules.containsKey(currentPair))return currentRules.get(currentPair);
+          else{
+              if (baseRules.containsKey(defaultPair))return baseRules.get(defaultPair);
+              else throw new SCClassNotDescribedException();
+          }
+
+       } catch (InstantiationException e) {
+           e.printStackTrace();
+           return null;
+       } catch (IllegalAccessException e) {
+           e.printStackTrace();
+           return null;
+       }
+   }
     //--------getters generated----------
 
 

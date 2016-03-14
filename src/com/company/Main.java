@@ -1,6 +1,10 @@
 package com.company;
 
+import javax.swing.text.html.parser.Entity;
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.function.Consumer;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,11 +12,6 @@ public class Main {
         String name = sc.next();*/
         Rector rc = new Rector("Gus", "default");
         rc.create();
-        try {
-            rc.saveState();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         Director d = new Director("Chip", "4486");
         d.create();
         HeadOfDep h = new HeadOfDep("Sug", "4576");
@@ -27,5 +26,31 @@ public class Main {
         j.create();
         AcademicPlan ap=new AcademicPlan("Plan","2016");
         ap.create();
+        SecurityMonitor sm=new SecurityMonitor();
+        HashMap<Class<?>,Class<?>> rules=new HashMap<Class<?>,Class<?>>();
+        rules.put(rc.getClass(),d.getClass());
+        SecureObjectContainer c=new SecureObjectContainer();
+
+        Class<?> fromClass=rc.getClass();
+        Class<?> toClass=d.getClass();
+
+
+        try {
+            SecureObjectRoot fromObject=(SecureObjectRoot)fromClass.newInstance();
+            SecureObjectRoot toObject=(SecureObjectRoot)toClass.newInstance();
+            SecureObjectPair pair=new SecureObjectPair();
+            System.out.println(fromObject.fullName()+" "+toObject.getClass().getName());
+            System.out.println(toObject.fullName()+" "+toObject.getClass().getName());
+
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+
+        }
+
+
+
     }
 }

@@ -6,6 +6,9 @@ package com.company;
 public class Journal extends SecureObjectRoot{
     private String name;
     private String dateOfApproval;
+    {
+        name ="default";
+    }
 
     public Journal(){}
 

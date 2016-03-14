@@ -9,7 +9,6 @@ import java.io.Serializable;
 public interface ISecureObj extends Serializable{
     void create();
     void delete();
-    void update();
     String fullName();
     void saveState() throws IOException;
 }

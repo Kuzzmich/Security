@@ -9,8 +9,11 @@ import java.io.Serializable;
  * Created by kuzzm on 05.03.2016.
  */
 public class Rector extends SecureObjectRoot{
-    private String name="Default name";
-    private String birth="Default birth";
+    private String name;
+    private String birth;
+    {
+        name ="default";
+    }
 
     public Rector(String fullName, String birthday){
         name=fullName;

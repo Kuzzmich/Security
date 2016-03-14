@@ -15,6 +15,7 @@ public class SecurityRights {
         create=creatingRight;
         update=updatingRight;
         delete=deletingRigth;
+        current=currentRules;
     }
     //----------getters generated----------
 

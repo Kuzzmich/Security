@@ -1,9 +1,11 @@
 package com.company;
 
+import java.io.Serializable;
+
 /**
  * Created by tokhchukov on 09.03.2016.
  */
-public class SecureObjectPair {
+public class SecureObjectPair implements Serializable {
     private ISecureObj first;
     private ISecureObj  second;
 

@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 public class Main {
     public static void main(String[] args) {
         /*Scanner sc = new Scanner(System.in);
-        String name = sc.next();*/
+        String name = sc.next();
         Rector rc = new Rector("Gus", "default");
         rc.create();
         Director d = new Director("Chip", "4486");
@@ -49,7 +49,24 @@ public class Main {
             e.printStackTrace();
 
         }
+        try {
+            Class <?> from=Class.forName("com.company.AcademicPlan");
+            Class <?> to =Class.forName("com.company.Rector");
 
+            AcademicPlan acm=(AcademicPlan) from.newInstance();
+            Rector rc=(Rector) to.newInstance();
+            SecurityMonitor monitor=new SecurityMonitor();
+            SecureObjectPair pair=new SecureObjectPair(acm,rc);
+            SecurityRights rights=new SecurityRights(true,true,false,false);
+            monitor.getBaseRules().put(pair,rights);
+            File out=new File("out.dat");
+            if (out.exists())monitor.loadDefaultRules(out);
+            else monitor.saveDefaultRules(out);
+            acm.create();
+            monitor.getBaseRules().entrySet().forEach(System.out::println);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
 
 
     }

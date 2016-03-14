@@ -37,8 +37,8 @@ public class SecurityMonitor {
     }
 
 
-    public void loadCurrentRules(File currrules)throws SerializationException,ClassNotFoundException{
-        try(FileInputStream outstream=new FileInputStream(currrules)){
+    public void loadCurrentRules(File currRules)throws SerializationException,ClassNotFoundException{
+        try(FileInputStream outstream=new FileInputStream(currRules)){
             ObjectInputStream currinput=new ObjectInputStream(outstream);
             baseRules=(HashMap<SecureObjectPair,SecurityRights>) currinput.readObject();
         }catch (IOException e){
@@ -56,8 +56,8 @@ public class SecurityMonitor {
         }
     }
 
-    public void saveCurrentRules(File currrules) throws IOException{
-        try (FileOutputStream outstream=new FileOutputStream(currrules)){
+    public void saveCurrentRules(File currRules) throws IOException{
+        try (FileOutputStream outstream=new FileOutputStream(currRules)){
             ObjectOutputStream curroutput=new ObjectOutputStream(outstream);
             curroutput.writeObject(baseRules);
         } catch (IOException e) {

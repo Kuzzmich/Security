@@ -1,27 +1,26 @@
 package com.company;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 
 /**
  * Created by tokhchukov on 11.03.2016.
  */
 public class SecureObjectContainer {
-    private HashSet <SecureObjectRoot> objects;
+    private static HashSet <SecureObjectRoot> objects;
+    static
     {
         objects=new HashSet<SecureObjectRoot>();
     }
-    public synchronized void addObject(SecureObjectRoot obj){
+    public static synchronized void addObject(SecureObjectRoot obj){
         objects.add(obj);
     }
 
-    public  synchronized void removeObject(SecureObjectRoot obj){
+    public static synchronized void removeObject(SecureObjectRoot obj){
         if (objects.contains(obj))objects.remove(obj);
     }
 
-    public synchronized void saveState(File out) {
+    public static synchronized void saveState(File out) {
         try {
             if (!out.exists()) out.createNewFile();
             FileOutputStream outstr = new FileOutputStream(out);
@@ -32,7 +31,7 @@ public class SecureObjectContainer {
         }
 
     }
-    public synchronized boolean loadState(File in){
+    public static synchronized boolean loadState(File in){
         FileInputStream fis;
         try{
             if (!in.exists())return false;
@@ -48,13 +47,6 @@ public class SecureObjectContainer {
             e.printStackTrace();
         }
      return false;
-    }
-    public List<SecureObjectRoot> getObjects(){
-        return Arrays.asList(objects.toArray(new SecureObjectRoot[objects.size()]));
-    }
-
-    public void printObjects(){
-        objects.forEach(x->System.out.println(x.fullName()));
     }
 
 }

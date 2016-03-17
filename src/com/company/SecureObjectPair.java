@@ -1,24 +1,18 @@
 package com.company;
 
-import java.io.IOException;
-import java.io.Serializable;
-
 /**
  * Created by tokhchukov on 09.03.2016.
  */
-public class SecureObjectPair implements Serializable{
-    private SecureObjectRoot first;
-    private SecureObjectRoot  second;
+public class SecureObjectPair {
+    private ISecureObj first;
+    private ISecureObj second;
 
 public SecureObjectPair(){}
-
-    public SecureObjectPair(SecureObjectRoot frst, SecureObjectRoot scnd)
+    public SecureObjectPair(ISecureObj frst, ISecureObj scnd)
     {
         first=frst;
         second=scnd;
     }
-    //--------------overriding hash and equals-------------
-
     @Override
     public int hashCode() {
         int code=first.hashCode()>>3+second.hashCode()<<2;
@@ -36,39 +30,5 @@ public SecureObjectPair(){}
         if (!(first.hashCode()==that.first.hashCode())) return false;
         return second.hashCode()==that.second.hashCode();
 
-    }
-
-
-    //--------------overriding serialization----------
-
-    public void writeObject(java.io.ObjectOutputStream stream)
-            throws IOException{
-        stream.writeObject(first);
-        stream.writeObject(second);
-    }
-
-    public void readObject(java.io.ObjectInputStream stream)
-            throws IOException,ClassNotFoundException{
-        first=(SecureObjectRoot)stream.readObject();
-        second=(SecureObjectRoot)stream.readObject();
-    }
-    //----------------getters generated-------------
-
-    public ISecureObj getFirst() {
-        return first;
-    }
-
-    public ISecureObj getSecond() {
-        return second;
-    }
-
-    //---------------setters generated--------------
-
-    public void setFirst(SecureObjectRoot first) {
-        this.first = first;
-    }
-
-    public void setSecond(SecureObjectRoot second) {
-        this.second = second;
     }
 }

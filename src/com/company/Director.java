@@ -3,10 +3,12 @@ package com.company;
 /**
  * Created by kuzzm on 05.03.2016.
  */
-public class Director extends Rector{
+public class Director extends Rector {
     private String name;
     private String birth;
-
+    {
+        name ="default";
+    }
     public Director(){}
 
     public Director(String fullName, String birthday) {

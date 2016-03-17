@@ -6,6 +6,9 @@ package com.company;
 public class HeadOfDep extends Director {
     private String name;
     private String birth;
+    {
+        name ="default";
+    }
 
     public HeadOfDep(){}
 

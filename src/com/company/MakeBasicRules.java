@@ -16,7 +16,7 @@ public class MakeBasicRules {
             for (int i=0;i<maxLineNum; i++){
                 String tmpString = lnr.readLine();
                 if(tmpString == null)
-                    break;s
+                    break;
 
                 if(tmpString.indexOf(anchor) != -1)
                 {

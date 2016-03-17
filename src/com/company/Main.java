@@ -27,5 +27,8 @@ public class Main {
         j.create();
         AcademicPlan ap=new AcademicPlan("Plan","2016");
         ap.create();
+
+        MakeBasicRules mbr=new MakeBasicRules();
+        mbr.readAndMake();
     }
 }

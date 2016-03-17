@@ -8,30 +8,29 @@ import java.io.*;
 public class MakeBasicRules {
     public void readAndMake(){
         int maxLineNum=20;
-        int lineNum=0;
-        String srchString=null;
-        String anchor="////";
+        String tmpString="";
+        String anchorStart="<begin>";
+        String anchorStop="<end>";
         try {
-            LineNumberReader lnr = new LineNumberReader(new BufferedReader(new FileReader("Student.java")));
-            for (int i=0;i<maxLineNum; i++){
-                String tmpString = lnr.readLine();
+            FileWriter fw=new FileWriter("Matrix.txt", true);
+            LineNumberReader lnr = new LineNumberReader(new BufferedReader(new FileReader("src/com/company/Student.java")));
+            while(!tmpString.equals(anchorStop)){
+                tmpString = lnr.readLine();
                 if(tmpString == null)
                     break;
 
-                if(tmpString.indexOf(anchor) != -1)
+                if(tmpString.indexOf(anchorStart) != -1)
                 {
-                    srchString=tmpString;
+                    tmpString=lnr.readLine();
+                    while(!tmpString.equals("<end>")) {
+                        fw.append(tmpString + System.getProperty("line.separator"));
+                        tmpString=lnr.readLine();
+
+                    }
+                    fw.close();
                     break;
                 }
             }
-
-            srchString=srchString.replaceAll("\\////|\\--", "");    // Топорный метод, но удаляемые
-            srchString=srchString.trim();                           // элементы изначально известны
-
-            FileWriter fw=new FileWriter("Matrix.txt", true);
-            fw.append(srchString+System.getProperty("line.separator"));
-            fw.close();
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

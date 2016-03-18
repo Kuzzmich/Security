@@ -3,10 +3,10 @@ package com.company;
 /**
  * Created by Алексей on 07.03.2016.
  */
-public class AcademicPlan extends SecureObjectRoot {
+public class AcademicPlan extends SecureObjectRoot{
     private String name;
     private String dateOfApproval;
-    {asdasd
+    {
         name ="default";
     }
 

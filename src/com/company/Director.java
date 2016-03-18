@@ -3,7 +3,7 @@ package com.company;
 /**
  * Created by kuzzm on 05.03.2016.
  */
-public class Director extends Rector {
+public class Director extends Rector{
     private String name;
     private String birth;
     {

@@ -1,11 +1,3 @@
-/*
-<begin>
-Teacher 0 1 1
-Director 1 1 1
-Rector 1 1 1
-<end>
-*/
-
 package com.company;
 
 /**

@@ -58,8 +58,8 @@ public class SecurityMonitor {
         }
     }
 
-    public void saveCurrentRules(File currrules) throws IOException{
-        try (FileOutputStream outstream=new FileOutputStream(currrules)){
+    public void saveCurrentRules(File currRules) throws IOException{
+        try (FileOutputStream outstream=new FileOutputStream(currRules)){
             ObjectOutputStream curroutput=new ObjectOutputStream(outstream);
             curroutput.writeObject(currentRules);
         } catch (IOException e) {

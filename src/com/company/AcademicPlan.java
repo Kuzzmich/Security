@@ -9,7 +9,7 @@ public class AcademicPlan extends SecureObjectRoot{
     {
         name ="default";
     }
-
+asddasasdasd
     public AcademicPlan(){}
 
     public  AcademicPlan(String nameOfJ, String date){

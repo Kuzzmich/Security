@@ -6,7 +6,7 @@ package com.company;
 public class AcademicPlan extends SecureObjectRoot {
     private String name;
     private String dateOfApproval;
-    {
+    {asdasd
         name ="default";
     }
 

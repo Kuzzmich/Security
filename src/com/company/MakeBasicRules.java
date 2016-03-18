@@ -2,6 +2,7 @@ package com.company;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Алексей on 13.03.2016.
@@ -32,14 +33,18 @@ public class MakeBasicRules extends SecureObjectRoot {
             monitor.getBaseRules().entrySet().forEach(System.out::println);*/
 
             FileWriter fw=new FileWriter("Matrix.txt", true);
+
+            File f=new File("src/com/company");
+            File[] files=f.listFiles();
+            for(File path:files) System.out.println(path);
+
             BufferedReader buffRead = new BufferedReader(new FileReader("src/com/company/Student.java"));
             String tmpString = buffRead.readLine();
 
             while(!tmpString.equals(anchorStop)){
                 tmpString = buffRead.readLine();
 
-                if(tmpString.indexOf(anchorStart) != -1)
-                {
+                if(tmpString.indexOf(anchorStart) != -1){
                     tmpString=buffRead.readLine();
 
                     if (tmpString.split(" ").length==1) {
@@ -80,8 +85,6 @@ public class MakeBasicRules extends SecureObjectRoot {
                                                         Boolean.parseBoolean(rulesArr[1]),
                                                         Boolean.parseBoolean(rulesArr[2]), false);
                 monitor.getBaseRules().put(pair,rights);
-                System.out.println(monitor.getBaseRules().entrySet());
-                System.out.println(System.lineSeparator());
             }
 
             monitor.getBaseRules().entrySet().forEach(System.out::println);
@@ -90,11 +93,9 @@ public class MakeBasicRules extends SecureObjectRoot {
             else monitor.saveDefaultRules(out);
 
 
-        } catch (IOException | IllegalAccessException e) {
+        } catch (IOException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
             e.printStackTrace();
         }
     }

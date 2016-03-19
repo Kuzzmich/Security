@@ -43,7 +43,7 @@ public class Main {
 
         try {
             MakeBasicRules mbr=new MakeBasicRules();
-            mbr.readAndMake();
+            mbr.makeRules();
 //            monitor.createRequest(rc, d);
             SecureObjectPair pair=new SecureObjectPair(rc,d);
             System.out.println(monitor.addCurrentRule(pair, new SecurityRights(false, false, false,true)));

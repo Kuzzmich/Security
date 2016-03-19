@@ -1,12 +1,3 @@
-/*
-<begin>
-com.company.Student
-com.company.Rector true false true
-com.company.Director false true true
-com.company.HeadOfDep true false false
-<end>
-*/
-
 package com.company;
 
 /**

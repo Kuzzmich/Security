@@ -1,0 +1,6 @@
+<begin>
+com.company.Teacher
+com.company.Rector true false true
+com.company.Director false true true
+com.company.HeadOfDep true false false
+<end>

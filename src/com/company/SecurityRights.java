@@ -81,13 +81,9 @@ public class SecurityRights implements Serializable{
         this.current = current;
     }
     public static boolean isValid(@NotNull SecurityRights root,@NotNull SecurityRights child){
-        if ((child.isCreate()==true && root.isCreate()!=true)
-                || (child.isDelete()==true && root.isDelete()!=true)
-                || (child.isUpdate()==true && root.isUpdate()!=true))
-        {
-            return false;
-        }
-        else return true;
+        return !((child.isCreate() == true && root.isCreate() != true)
+                || (child.isDelete() == true && root.isDelete() != true)
+                || (child.isUpdate() == true && root.isUpdate() != true));
 
     }
 

@@ -17,13 +17,12 @@ public class Main {
     public static void main(String[] args) {
 
 
-
         Rector rc = new Rector("Gus", "default");
-/*
-        Scanner sc = new Scanner(System.in);
-        String name = sc.next();
 
-*/
+        /*Scanner sc = new Scanner(System.in);
+        String name = sc.next();*/
+
+
         Director d = new Director("Chip", "4486");
         HeadOfDep h = new HeadOfDep("Sug", "4576");
         Teacher t = new Teacher("Linets", "4576");
@@ -34,7 +33,7 @@ public class Main {
 
         add(rc, d, true, true, false);
         add(d, rc, false, false, true);
-        addString(rc.getClass().getName(), h.getClass().getName(), true, false, false);
+        add(rc, h, true, false, false);
         add(h, rc, false, false, false);
         add(d, h, true, false, true);
         add(h, d, false, false, false);
@@ -63,9 +62,6 @@ public class Main {
             e.printStackTrace();
 
         }
-
-        MakeBasicRules mbr=new MakeBasicRules();
-        mbr.readAndMake();
     }
 
     public static void add(SecureObjectRoot from, SecureObjectRoot to,boolean create,boolean update,boolean delete){
@@ -85,28 +81,6 @@ public class Main {
             e.printStackTrace();
         }
     }
-
-    public static void addString(String from, String to,boolean create,boolean update,boolean delete){
-        try {
-            Class <?> frm = Class.forName(from);
-            Class <?> too=Class.forName(to);
-            SecurityRights rights=new SecurityRights(create,update,delete,false);
-
-            SecureObjectRoot fromObj=(SecureObjectRoot)frm.newInstance();
-            SecureObjectRoot toObj=(SecureObjectRoot)too.newInstance();
-
-            SecureObjectPair pair=new SecureObjectPair(fromObj,toObj);
-            monitor.getBaseRules().put(pair,rights);
-        }
-        catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void loadOrSave(File file)throws IOException,ClassNotFoundException{
         if (!file.exists()){
             monitor.saveDefaultRules(file);

@@ -35,7 +35,8 @@ public class MakeBasicRules extends SecureObjectRoot {
             FileWriter fw=new FileWriter("Matrix.txt", true);
 
             File f=new File("src/com/company");
-            File[] files=f.listFiles();
+            ArrayList<File> files=new ArrayList<>();
+            files=new ArrayList<File>(Arrays.asList(f.listFiles()));
             for(File path:files) System.out.println(path);
 
             BufferedReader buffRead = new BufferedReader(new FileReader("src/com/company/Student.java"));

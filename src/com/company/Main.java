@@ -42,19 +42,17 @@ public class Main {
         monitor.attachContainer(container);
 
         try {
-
-            monitor.createRequest(rc, d);
+            MakeBasicRules mbr=new MakeBasicRules();
+            mbr.readAndMake();
+//            monitor.createRequest(rc, d);
             SecureObjectPair pair=new SecureObjectPair(rc,d);
-//            System.out.println(monitor.addCurrentRule(pair, new SecurityRights(false, false, false,true)));
-//            System.out.println(monitor.addCurrentRule(pair, new SecurityRights(false, false, true, true)));
+            System.out.println(monitor.addCurrentRule(pair, new SecurityRights(false, false, false,true)));
+            System.out.println(monitor.addCurrentRule(pair, new SecurityRights(false, false, true, true)));
             loadOrSave(new File("default.dat"));
             loadOrSaveCurrent(new File("current.dat"));
-            XMLEncoder e=new XMLEncoder(new FileOutputStream("out.xml"));
-            e.writeObject(monitor.getBaseRules());
-            e.close();
-            d.update(rc, monitor);
-            monitor.createRequest(rc, h);
-            monitor.deleteRequest(rc, h);
+
+
+
 
 
 

@@ -3,45 +3,61 @@ package com.company;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+/*
+ * На основании возвращаемого листа: Первая строка - имя вызываемого класаа, последующие - вызывающие
+ * с правилами доступа. Нужно распарсить это всё
+* */
 
 /**
  * Created by Алексей on 13.03.2016.
  */
 public class MakeBasicRules extends SecureObjectRoot {
-    public void readAndMake(){
+    private ArrayList<String> readFile(String url){
         String anchorStart="<begin>";
         String anchorStop="<end>";
+        ArrayList<String> classes=new ArrayList<>();
+
+        try {
+            BufferedReader buffRead = new BufferedReader(new FileReader(url));
+            String tmpString = buffRead.readLine();
+
+            // Выборка строк и прав на основании строк
+            while(!tmpString.equals(anchorStop)){
+                tmpString = buffRead.readLine();
+
+                if(tmpString.indexOf(anchorStart) != -1){
+                    tmpString=buffRead.readLine();
+                    while(!tmpString.equals(anchorStop)) {
+                        classes.add(tmpString);
+                        tmpString=buffRead.readLine();
+
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return classes;
+    }
+
+    public void MakeRules(){
+        /*String anchorStart="<begin>";
+        String anchorStop="<end>";
         String className="";
-        ArrayList<String> fromClasses=new ArrayList<>();
+        ArrayList<String> fromClasses=new ArrayList<>();*/
+        String toClassName="";
         SecurityMonitor monitor=new SecurityMonitor(new SecureObjectContainer());
 
         try {
-            /*Class <?> from=Class.forName("com.company.AcademicPlan");
-            Class <?> to =Class.forName("com.company.Rector");
-
-            AcademicPlan acm=(AcademicPlan) from.newInstance();
-            Rector rc=(Rector) to.newInstance();
-            SecurityMonitor monitor=new SecurityMonitor();
-            SecureObjectPair pair=new SecureObjectPair(acm,rc);
-            SecurityRights rights=new SecurityRights(true,true,false,false);
-            monitor.getBaseRules().put(pair,rights);
-
-            File out=new File("out.dat");
-            if (out.exists())monitor.loadDefaultRules(out);
-            else monitor.saveDefaultRules(out);
-            acm.create();
-            monitor.getBaseRules().entrySet().forEach(System.out::println);*/
-
-            FileWriter fw=new FileWriter("Matrix.txt", true);
-
             File f=new File("src/com/company");
             ArrayList<File> files=new ArrayList<>();
             files=new ArrayList<File>(Arrays.asList(f.listFiles()));
             for(File path:files) System.out.println(path);
 
-            BufferedReader buffRead = new BufferedReader(new FileReader("src/com/company/Student.java"));
+            /*BufferedReader buffRead = new BufferedReader(new FileReader("src/com/company/Student.java"));
             String tmpString = buffRead.readLine();
 
+            // Выборка строк и прав на основании строк
             while(!tmpString.equals(anchorStop)){
                 tmpString = buffRead.readLine();
 
@@ -55,14 +71,11 @@ public class MakeBasicRules extends SecureObjectRoot {
 
                     while(!tmpString.equals(anchorStop)) {
                         fromClasses.add(tmpString);
-                        fw.append(tmpString).append(System.getProperty("line.separator"));
                         tmpString=buffRead.readLine();
 
                     }
-
-                    fw.close();
                 }
-            }
+            }*/
 
             // Выборка имён классов взаимодействующих с данным
             ArrayList<String> fromClassNames=new ArrayList<>();
@@ -89,7 +102,7 @@ public class MakeBasicRules extends SecureObjectRoot {
             }
 
             monitor.getBaseRules().entrySet().forEach(System.out::println);
-            File out=new File("out.dat");
+            File out=new File("default.dat");
             if (out.exists())monitor.loadDefaultRules(out);
             else monitor.saveDefaultRules(out);
 

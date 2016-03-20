@@ -8,7 +8,7 @@ import java.util.Arrays;
  * Created by Алексей on 13.03.2016.
  */
 public class MakeBasicRules extends SecureObjectRoot {
-    // Чтение файла
+    // Чтение файла и формирование списка классов
     private ArrayList<String> readFile(String url){
         String anchorStart="<begin>";
         String anchorStop="<end>";
@@ -18,7 +18,6 @@ public class MakeBasicRules extends SecureObjectRoot {
             BufferedReader buffRead = new BufferedReader(new FileReader(url));
             String tmpString = buffRead.readLine();
 
-            // Выборка строк и прав на основании строк
             while(!tmpString.equals(anchorStop)){
                 if(tmpString.indexOf(anchorStart) != -1){
                     tmpString=buffRead.readLine();
@@ -52,7 +51,7 @@ public class MakeBasicRules extends SecureObjectRoot {
 
     // Создание базовой матрицы
     public void makeRules(File f){
-        ArrayList<File> files=new ArrayList<File>(Arrays.asList(f.listFiles()));
+        ArrayList<File> files=new ArrayList<>(Arrays.asList(f.listFiles()));
         for(File path:files) {
             ArrayList<String> classList = readFile(path.getPath());
             String toClassName = classList.get(0);

@@ -54,14 +54,11 @@ public class Main {
             loadOrSave(new File("default.dat"));
             loadOrSaveCurrent(new File("current.dat"));
 
-
-
-
-
-
+        } catch (NullPointerException e) {
+            System.out.println("Wrong directory, try again");
+            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
-
         }
     }
 

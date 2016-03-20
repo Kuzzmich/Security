@@ -37,8 +37,8 @@ public class MakeBasicRules extends SecureObjectRoot {
     //Выборка имён классов взаимодействующих с данным
     private ArrayList<String> getClassNames(ArrayList<String> classList){
         ArrayList<String> fromClassNames=new ArrayList<>();
-        for (int i=0; i<classList.size(); i++)
-            fromClassNames.add(classList.get(i).substring(0, classList.get(i).indexOf(" ")));
+        for (String classListElem : classList)
+            fromClassNames.add(classListElem.substring(0, classListElem.indexOf(" ")));
         return fromClassNames;
     }
 

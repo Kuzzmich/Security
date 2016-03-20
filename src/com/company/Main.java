@@ -16,7 +16,11 @@ import java.io.IOException;
 public class Main {
     public static SecurityMonitor monitor=new SecurityMonitor();
     public static void main(String[] args) {
-
+       /* while(true){
+            Scanner sc=new Scanner(System.in);
+            sc.next();
+            sc.close();
+        }*/
 
         Rector rc = new Rector("Gus", "default");
 

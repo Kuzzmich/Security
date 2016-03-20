@@ -7,6 +7,7 @@ import java.io.*;
 import javax.swing.text.html.parser.Entity;
 import java.io.File;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.function.Consumer;
 
 import java.io.IOException;
@@ -42,8 +43,10 @@ public class Main {
         monitor.attachContainer(container);
 
         try {
+            Scanner sc=new Scanner(System.in);
+            File f=new File(sc.next());
             MakeBasicRules mbr=new MakeBasicRules();
-            mbr.makeRules();
+            mbr.makeRules(f);
 //            monitor.createRequest(rc, d);
             SecureObjectPair pair=new SecureObjectPair(rc,d);
             System.out.println(monitor.addCurrentRule(pair, new SecurityRights(false, false, false,true)));

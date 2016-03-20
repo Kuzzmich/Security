@@ -3,7 +3,6 @@ package com.company;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner;
 
 /**
  * Created by Алексей on 13.03.2016.
@@ -52,9 +51,7 @@ public class MakeBasicRules extends SecureObjectRoot {
     }
 
     // Создание базовой матрицы
-    public void makeRules(){
-        Scanner sc=new Scanner(System.in);
-        File f=new File(sc.next());
+    public void makeRules(File f){
         ArrayList<File> files=new ArrayList<File>(Arrays.asList(f.listFiles()));
         for(File path:files) {
             ArrayList<String> classList = readFile(path.getPath());

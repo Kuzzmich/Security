@@ -50,7 +50,7 @@ public class MakeBasicRules extends SecureObjectRoot {
     }
 
     // Создание базовой матрицы
-    public void makeRules(File f){
+    public void makeRules(File f) throws NullPointerException{
         ArrayList<File> files=new ArrayList<>(Arrays.asList(f.listFiles()));
         for(File path:files) {
             ArrayList<String> classList = readFile(path.getPath());

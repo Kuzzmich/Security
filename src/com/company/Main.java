@@ -1,15 +1,7 @@
 package com.company;
 
-import java.beans.XMLEncoder;
-import java.io.*;
-
-
-import javax.swing.text.html.parser.Entity;
 import java.io.File;
-import java.util.HashMap;
 import java.util.Scanner;
-import java.util.function.Consumer;
-
 import java.io.IOException;
 
 
@@ -51,16 +43,12 @@ public class Main {
             File f=new File(sc.next());
             MakeBasicRules mbr=new MakeBasicRules();
             mbr.makeRules(f);
-//            monitor.createRequest(rc, d);
+            monitor.createRequest(rc, d);
             SecureObjectPair pair=new SecureObjectPair(rc,d);
             System.out.println(monitor.addCurrentRule(pair, new SecurityRights(false, false, false,true)));
             System.out.println(monitor.addCurrentRule(pair, new SecurityRights(false, false, true, true)));
             loadOrSave(new File("default.dat"));
             loadOrSaveCurrent(new File("current.dat"));
-
-        } catch (NullPointerException e) {
-            System.out.println("Wrong directory, try again");
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }

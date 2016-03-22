@@ -1,6 +1,8 @@
 package com.company;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.util.Scanner;
 import java.io.IOException;
 
@@ -36,6 +38,10 @@ public class Main {
         add(h, d, false, false, false);
 
         SecureObjectContainer container = new SecureObjectContainer();
+        /*try {
+            ObjectInputStream oi=new ObjectInputStream(new FileInputStream("collection.dat"));
+            container=oi.readObject();
+        }*/
         monitor.attachContainer(container);
 
         try {

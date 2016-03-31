@@ -18,10 +18,10 @@ public class SecurityRights implements Serializable{
 
     public SecurityRights(){}
     //Простой конструктор
-    public SecurityRights(boolean creatingRight, boolean updatingRight,boolean deletingRigth) {
+    public SecurityRights(boolean creatingRight, boolean updatingRight,boolean deletingRight) {
         create=creatingRight;
         update=updatingRight;
-        delete=deletingRigth;
+        delete=deletingRight;
         derived=true;
         setbydefault=true;
     }

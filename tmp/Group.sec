@@ -1,6 +1,7 @@
 <begin>
 com.company.Group
-com.company.Rector true false true
-com.company.Director false true true
-com.company.HeadOfDep true false false
+com.company.Director
+com.company.Rector true false true false true
+com.company.Director false true true true false
+com.company.HeadOfDep true false false true true
 <end>

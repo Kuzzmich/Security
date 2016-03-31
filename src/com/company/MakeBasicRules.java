@@ -55,11 +55,15 @@ public class MakeBasicRules extends SecureObjectRoot {
         for(File path:files) {
             ArrayList<String> classList = readFile(path.getPath());
             String toClassName = classList.get(0);
+            String parentName = classList.get(1);
+            String childName = null;
             classList.remove(0);
+            classList.remove(0);
+            // получаю имена и правила для вызывающих классов
             ArrayList<String> fromClassNames = getClassNames(classList);
             ArrayList<String> rulesList = getRulesList(classList);
             SecurityMonitor monitor = new SecurityMonitor(new SecureObjectContainer());
-            String[] rulesArr = {"", "", ""};
+            String[] rulesArr = {"", "", "", "", ""};
 
             try {
                 Class<?> classNameTo = Class.forName(toClassName);
@@ -70,9 +74,12 @@ public class MakeBasicRules extends SecureObjectRoot {
                     SecureObjectRoot fromObj = (SecureObjectRoot) from.newInstance();
                     SecureObjectPair pair = new SecureObjectPair(fromObj, toObj);
                     rulesArr = rulesList.get(i).split(" ");
-                    SecurityRights rights = new SecurityRights(Boolean.parseBoolean(rulesArr[0]),
+                    SecurityRights rights = new SecurityRights(
+                            Boolean.parseBoolean(rulesArr[0]),
                             Boolean.parseBoolean(rulesArr[1]),
-                            Boolean.parseBoolean(rulesArr[2]), false);
+                            Boolean.parseBoolean(rulesArr[2]),
+                            Boolean.parseBoolean(rulesArr[3]),
+                            Boolean.parseBoolean(rulesArr[4]));
                     monitor.getBaseRules().put(pair, rights);
                 }
 

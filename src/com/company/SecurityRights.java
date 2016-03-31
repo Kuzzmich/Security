@@ -26,10 +26,10 @@ public class SecurityRights implements Serializable{
         setbydefault=true;
     }
     //расширенный конструктор
-    public SecurityRights(boolean creatingRight, boolean updatingRight,boolean deletingRigth,boolean isDerived, boolean isSetByDefault) {
+    public SecurityRights(boolean creatingRight, boolean updatingRight,boolean deletingRight,boolean isDerived, boolean isSetByDefault) {
         create=creatingRight;
         update=updatingRight;
-        delete=deletingRigth;
+        delete=deletingRight;
         derived=isDerived;
         setbydefault=isSetByDefault;
     }

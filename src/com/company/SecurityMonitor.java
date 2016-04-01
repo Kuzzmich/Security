@@ -5,6 +5,7 @@ import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by tokhchukov on 09.03.2016.
@@ -71,18 +72,46 @@ public class SecurityMonitor {
 
 
     //------------------Requests------------------
+    private void addObjectToContainer(SecureObjectRoot target) throws SCClassNotDescribedException {
+        container.addObject(target);
+        List<SecureObjectRoot> lst=container.getObjects();
+        for (SecureObjectRoot secureObject: lst){
+            if (!(secureObject.getClass().getName().equals(target.getClass().getName()))) {
+                SecurityRights base = getDefaultRights(target, secureObject);
+                if (base.isSetbydefault()) {
+
+                    SecureObjectPair pair = new SecureObjectPair(target, secureObject);
+                    addCurrentRule(pair, base);
+
+                }
+            }
+            if (!(secureObject.getClass().getName().equals(target.getClass().getName()))) {
+                SecurityRights base = getDefaultRights(secureObject, target );
+                if (base.isSetbydefault()) {
+                    SecureObjectPair pair = new SecureObjectPair(secureObject, target);
+                    addCurrentRule(pair, base);
+                }
+            }
+        }
+    }
+
+    public void addObjectToContainerRoot(SecureObjectRoot target){
+        container.addObject(target);
+
+    }
+
 
     //запрос на создание объекта
     public void createRequest(@NotNull SecureObjectRoot from, @NotNull SecureObjectRoot target)
             throws RestrictedByCurrentRulesException, RestrictedByDefaultRulesException{
         try {
+            addObjectToContainer(target);
             SecurityRights rights=getRights(from,target);
             if (rights.isCreate()){ //проверка на разрешенность создания
-                container.addObject(target);
                 target.create();
             }
             else {
-                if (rights.isCurrent())throw new RestrictedByCurrentRulesException();
+                if (rights.isSetbydefault())throw new RestrictedByCurrentRulesException();
                 else throw new RestrictedByDefaultRulesException();
             }
         } catch (SCClassNotDescribedException e) {
@@ -99,7 +128,7 @@ public class SecurityMonitor {
                  container.removeObject(target);
              }
              else {
-                 if (rights.isCurrent())throw new RestrictedByCurrentRulesException();
+                 if (rights.isSetbydefault())throw new RestrictedByCurrentRulesException();
                  else throw new RestrictedByDefaultRulesException();
              }
          } catch (SCClassNotDescribedException e) {
@@ -113,7 +142,7 @@ public class SecurityMonitor {
         try {
             SecurityRights rights=getRights(from,target);
             if (!rights.isUpdate()){ //проверка на разрешенность удаления
-                if (rights.isCurrent())throw new RestrictedByCurrentRulesException();
+                if (rights.isSetbydefault())throw new RestrictedByCurrentRulesException();
                 else throw new RestrictedByDefaultRulesException();
             }
         } catch (SCClassNotDescribedException e) {
@@ -142,31 +171,44 @@ public class SecurityMonitor {
         else return OperationStatus.ST_FAILURE;
     }
 
-    //Получить общие права доступа
+    //Получить права доступа
    public SecurityRights getRights(SecureObjectRoot from, SecureObjectRoot to) throws SCClassNotDescribedException {
-       Class<?> fromClass=from.getClass();  //получение классов для создания временных объектов, предназначенных
-       Class<?> toClass=to.getClass();      //для получение информации из базовой таблицы
-       try {
-           SecureObjectRoot fromObject=(SecureObjectRoot)fromClass.newInstance();
-           SecureObjectRoot toObject=(SecureObjectRoot)toClass.newInstance();
 
-           SecureObjectPair defaultPair=new SecureObjectPair(fromObject,toObject); //создан из временных объектов для получения базовых прав
-           SecureObjectPair currentPair=new SecureObjectPair(from,to);//для получения текущих прав
+       SecureObjectPair currentPair = new SecureObjectPair(from, to);//для получения текущих прав
 
-          if (currentRules.containsKey(currentPair))return currentRules.get(currentPair);
-          else{
-              if (baseRules.containsKey(defaultPair))return baseRules.get(defaultPair);
-              else throw new SCClassNotDescribedException();
-          }
-
-       } catch (InstantiationException e) {
-           e.printStackTrace();
-           return null;
-       } catch (IllegalAccessException e) {
-           e.printStackTrace();
-           return null;
+       if (currentRules.containsKey(currentPair)) return currentRules.get(currentPair);
+       else {
+                return new SecurityRights(false,false,false,false,false) ;
        }
+
    }
+
+
+    @Deprecated
+    public SecurityRights getTotalRights(SecureObjectRoot from, SecureObjectRoot to) throws SCClassNotDescribedException {
+        Class<?> fromClass=from.getClass();  //получение классов для создания временных объектов, предназначенных
+        Class<?> toClass=to.getClass();      //для получение информации из базовой таблицы
+        try {
+            SecureObjectRoot fromObject=(SecureObjectRoot)fromClass.newInstance();
+            SecureObjectRoot toObject=(SecureObjectRoot)toClass.newInstance();
+
+            SecureObjectPair defaultPair=new SecureObjectPair(fromObject,toObject); //создан из временных объектов для получения базовых прав
+            SecureObjectPair currentPair=new SecureObjectPair(from,to);//для получения текущих прав
+
+            if (currentRules.containsKey(currentPair))return currentRules.get(currentPair);
+            else{
+                if (baseRules.containsKey(defaultPair))return baseRules.get(defaultPair);
+                else throw new SCClassNotDescribedException();
+            }
+
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 //    Получить базовые права доступа
 

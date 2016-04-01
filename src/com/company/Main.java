@@ -51,8 +51,8 @@ public class Main {
             mbr.makeRules(f);
             monitor.createRequest(rc, d);
             SecureObjectPair pair=new SecureObjectPair(rc,d);
-            System.out.println(monitor.addCurrentRule(pair, new SecurityRights(false, false, false,true)));
-            System.out.println(monitor.addCurrentRule(pair, new SecurityRights(false, false, true, true)));
+           // System.out.println(monitor.addCurrentRule(pair, new SecurityRights(false, false, false,true)));
+          //  System.out.println(monitor.addCurrentRule(pair, new SecurityRights(false, false, true, true)));
             loadOrSave(new File("default.dat"));
             loadOrSaveCurrent(new File("current.dat"));
         } catch (Exception e) {
@@ -64,7 +64,7 @@ public class Main {
 
         Class <?> frm=from.getClass();
         Class <?> too=to.getClass();
-        SecurityRights rights=new SecurityRights(create,update,delete,false);
+        SecurityRights rights=new SecurityRights(create,update,delete,false,false);
 
         try {
             SecureObjectRoot fromObj=(SecureObjectRoot)frm.newInstance();

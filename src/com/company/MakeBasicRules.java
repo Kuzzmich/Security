@@ -51,6 +51,9 @@ public class MakeBasicRules extends SecureObjectRoot {
 
     // Создание базовой матрицы
     public void makeRules(File f) throws NullPointerException{
+        //продумать передачу наследника в потомка для передачи прав
+        //как-то затирать старые права для замены новыми
+        //отмечать уже пройденные классы, у которых уже есть права
         ArrayList<File> files=new ArrayList<>(Arrays.asList(f.listFiles()));
         for(File path:files) {
             ArrayList<String> classList = readFile(path.getPath());
@@ -68,7 +71,6 @@ public class MakeBasicRules extends SecureObjectRoot {
             try {
                 Class<?> classNameTo = Class.forName(toClassName);
                 SecureObjectRoot toObj = (SecureObjectRoot) classNameTo.newInstance();
-
                 for (int i = 0; i < fromClassNames.size(); i++) {
                     Class<?> from = Class.forName(fromClassNames.get(i));
                     SecureObjectRoot fromObj = (SecureObjectRoot) from.newInstance();
@@ -80,6 +82,12 @@ public class MakeBasicRules extends SecureObjectRoot {
                             Boolean.parseBoolean(rulesArr[2]),
                             Boolean.parseBoolean(rulesArr[3]),
                             Boolean.parseBoolean(rulesArr[4]));
+                    if (rulesArr[3].equals("true")){
+                        Class<?> classNameToChild = Class.forName(childName);
+                        SecureObjectRoot toObjChild = (SecureObjectRoot) classNameToChild.newInstance();
+                        SecureObjectPair pairChild = new SecureObjectPair(fromObj, toObjChild);
+                        monitor.getBaseRules().put(pairChild, rights);
+                    }
                     monitor.getBaseRules().put(pair, rights);
                 }
 

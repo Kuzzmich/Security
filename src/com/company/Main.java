@@ -49,7 +49,7 @@ public class Main {
             File f=new File(sc.next());
             MakeBasicRules mbr=new MakeBasicRules();
             mbr.makeRules(f);
-            monitor.createRequest(rc, d);
+//            monitor.createRequest(rc, d);
             SecureObjectPair pair=new SecureObjectPair(rc,d);
            // System.out.println(monitor.addCurrentRule(pair, new SecurityRights(false, false, false,true)));
           //  System.out.println(monitor.addCurrentRule(pair, new SecurityRights(false, false, true, true)));

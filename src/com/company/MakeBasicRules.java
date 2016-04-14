@@ -10,6 +10,7 @@ import java.util.Arrays;
 public class MakeBasicRules extends SecureObjectRoot {
     // список пройденных классов
     ArrayList<String> doneClasses=new ArrayList<>();
+    SecurityMonitor monitor = new SecurityMonitor(new SecureObjectContainer());
     // Чтение файла и формирование списка классов
     private ArrayList<String> readFile(String url){
         String anchorStart="<begin>";
@@ -52,72 +53,65 @@ public class MakeBasicRules extends SecureObjectRoot {
     }
 
     private void getRules(String path, String child, ArrayList<String> tempArray){
-        //как-то затирать старые права для замены новыми
-        //отмечать уже пройденные классы, у которых уже есть права и просто передавать наследуемые права всем потомкам
         ArrayList<String> fileContent = readFile(path);
-        //-------------------------- проверка, был ли пройден файл
-        /*if (doneClasses.contains(fileContent.get(0))&&doneClasses.contains(fileContent.get(1))){
-            return;
-        } else {
-            int k=0;
-            while ((!doneClasses.contains(fileContent.get(k)))&&(k<2)) {
-                doneClasses.add(fileContent.get(k));
-                k++;
-            }*/
-            //---------------------------
-            String toClassName = fileContent.get(0);
-            String parentName = fileContent.get(1).split("\\.")[2]+".sec";
-            String childName = child;
-            if(childName!=null)
-                tempArray.add(child);
-            fileContent.remove(0);
-            fileContent.remove(0);
-            // получаю имена и правила для вызывающих классов
-            ArrayList<String> fromClassNames = getClassNames(fileContent);
-            ArrayList<String> rulesList = getRulesList(fileContent);
-            SecurityMonitor monitor = new SecurityMonitor(new SecureObjectContainer());
-            String[] rulesArr = {"", "", "", "", ""};
+        String toClassName = fileContent.get(0);
+        String parentName = fileContent.get(1).split("\\.")[2]+".sec";
+        String childName = child;
+        if(childName!=null)
+            tempArray.add(child);
+        fileContent.remove(0);
+        fileContent.remove(0);
+        // получаю имена и правила для вызывающих классов
+        ArrayList<String> fromClassNames = getClassNames(fileContent);
+        ArrayList<String> rulesList = getRulesList(fileContent);
 
-            try {
-                Class<?> classNameTo = Class.forName(toClassName);
-                SecureObjectRoot toObj = (SecureObjectRoot) classNameTo.newInstance();
-                for (int i = 0; i < fromClassNames.size(); i++) {
-                    Class<?> from = Class.forName(fromClassNames.get(i));
-                    SecureObjectRoot fromObj = (SecureObjectRoot) from.newInstance();
-                    SecureObjectPair pair = new SecureObjectPair(fromObj, toObj);
-                    rulesArr = rulesList.get(i).split(" ");
-                    SecurityRights rights = new SecurityRights(
-                            Boolean.parseBoolean(rulesArr[0]),
-                            Boolean.parseBoolean(rulesArr[1]),
-                            Boolean.parseBoolean(rulesArr[2]),
-                            Boolean.parseBoolean(rulesArr[3]),
-                            Boolean.parseBoolean(rulesArr[4]));
-                    if ((rulesArr[3].equals("true"))&&(childName!=null)){
-                        for (int j=tempArray.size()-1; j>0; j--) {
-                            Class<?> classNameToChild = Class.forName(tempArray.get(j));
-                            SecureObjectRoot toObjChild = (SecureObjectRoot) classNameToChild.newInstance();
-                            SecureObjectPair pairChild = new SecureObjectPair(fromObj, toObjChild);
-                            monitor.getBaseRules().put(pairChild, rights);
-                        }
+        String[] rulesArr = {"", "", "", "", ""};
+
+        try {
+            Class<?> classNameTo = Class.forName(toClassName);
+            SecureObjectRoot toObj = (SecureObjectRoot) classNameTo.newInstance();
+            for (int i = 0; i < fromClassNames.size(); i++) {
+                Class<?> from = Class.forName(fromClassNames.get(i));
+                SecureObjectRoot fromObj = (SecureObjectRoot) from.newInstance();
+                SecureObjectPair pair = new SecureObjectPair(fromObj, toObj);
+                rulesArr = rulesList.get(i).split(" ");
+                SecurityRights rights = new SecurityRights(
+                        Boolean.parseBoolean(rulesArr[0]),
+                        Boolean.parseBoolean(rulesArr[1]),
+                        Boolean.parseBoolean(rulesArr[2]),
+                        Boolean.parseBoolean(rulesArr[3]),
+                        Boolean.parseBoolean(rulesArr[4]));
+                if ((rulesArr[3].equals("true"))&&(childName!=null)){
+                    for (int j=tempArray.size()-1; j>0; j--) {
+                        Class<?> classNameToChild = Class.forName(tempArray.get(j));
+                        SecureObjectRoot toObjChild = (SecureObjectRoot) classNameToChild.newInstance();
+                        SecureObjectPair pairChild = new SecureObjectPair(fromObj, toObjChild);
+                        monitor.getBaseRules().replace(pairChild, rights);
                     }
-                    monitor.getBaseRules().put(pair, rights);
                 }
-
-                monitor.getBaseRules().entrySet().forEach(System.out::println);
-                File out = new File("default.dat");
-                if (out.exists()) monitor.loadDefaultRules(out);
-                else monitor.saveDefaultRules(out);
-
-            } catch (IllegalAccessException | InstantiationException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                monitor.getBaseRules().put(pair, rights);
             }
-            if (!(parentName.equals("SecureObjectRoot.sec"))) {
-                getRules("tmp\\" + parentName, toClassName, tempArray);
-            } else {
-                return;
-            }
+        } catch (IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (!(parentName.equals("SecureObjectRoot.sec"))) {
+            getRules("tmp\\" + parentName, toClassName, tempArray);
+        } else {
+            return;
+        }
+    }
+// Запись правил в файл
+    private void writeRulesToFile(){
+        monitor.getBaseRules().entrySet().forEach(System.out::println);
+        File out = new File("default.dat");
+        if (out.exists()) try {
+            monitor.loadDefaultRules(out);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        else monitor.saveDefaultRules(out);
     }
 
     // Создание базовой матрицы
@@ -128,5 +122,6 @@ public class MakeBasicRules extends SecureObjectRoot {
             ArrayList<String> tmpArr=new ArrayList<>();
             getRules(path, null, tmpArr);
         }
+        writeRulesToFile();
     }
 }

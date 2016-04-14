@@ -82,7 +82,7 @@ public class MakeBasicRules extends SecureObjectRoot {
                         Boolean.parseBoolean(rulesArr[3]),
                         Boolean.parseBoolean(rulesArr[4]));
                 if ((rulesArr[3].equals("true"))&&(childName!=null)){
-                    for (int j=tempArray.size()-1; j>0; j--) {
+                    for (int j=tempArray.size()-1; j>=0; j--) {
                         Class<?> classNameToChild = Class.forName(tempArray.get(j));
                         SecureObjectRoot toObjChild = (SecureObjectRoot) classNameToChild.newInstance();
                         SecureObjectPair pairChild = new SecureObjectPair(fromObj, toObjChild);

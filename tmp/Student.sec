@@ -1,7 +1,7 @@
 <begin>
 com.company.Student
-com.company.Group
-com.company.Rector true true true false true
-com.company.Director true true true false true
-com.company.HeadOfDep true true true false true
+com.company.Learner
+com.company.Person true true true false true
+com.company.LocalPerson true true true false true
+com.company.Employee true true true false true
 <end>

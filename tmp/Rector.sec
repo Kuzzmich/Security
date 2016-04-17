@@ -1,7 +1,0 @@
-<begin>
-com.company.Rector
-com.company.SecureObjectRoot
-com.company.Rector false false false true false
-com.company.Director true true true false true
-com.company.HeadOfDep true true true false true
-<end>

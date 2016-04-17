@@ -1,7 +1,0 @@
-<begin>
-com.company.Journal
-com.company.SecureObjectRoot
-com.company.Rector true true true false true
-com.company.Director true true true false true
-com.company.HeadOfDep true true true false true
-<end>

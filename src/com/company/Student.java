@@ -3,41 +3,35 @@ package com.company;
 /**
  * Created by Алексей on 07.03.2016.
  */
-public class Student extends Group {
-    private String name;
-    private String birth;
+public class Student extends Learner {
+    private String institute;
+    private String group;
 
     public Student(){}
 
-    public Student(String fullName, String birthday) {
-        this.name = fullName;
-        this.birth = birthday;
+    public Student(String institute, String group) {
+        this.institute = institute;
+        this.group = group;
     }
 
-    public String fullName(){
-        return getName();
-    }
+    /*public String fullName(){
+        return getPlaceOfBirth();
+    }*/
     //--------getters generated--------
-
-    @Override
-    public String getName() {
-        return name;
+    public String getInstitute() {
+        return institute;
     }
 
-    @Override
-    public String getBirth() {
-        return birth;
+    public String getGroup() {
+        return group;
     }
 
     //--------getters generated--------
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
+    public void setInstitute(String institute) {
+        this.institute = institute;
     }
 
-    @Override
-    public void setBirth(String birth) {
-        this.birth = birth;
+    public void setGroup(String group) {
+        this.group = group;
     }
 }

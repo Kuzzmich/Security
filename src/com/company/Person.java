@@ -1,31 +1,26 @@
 package com.company;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-
 /**
  * Created by kuzzm on 05.03.2016.
  */
 
-public class Rector extends SecureObjectRoot{
+public class Person extends SecureObjectRoot{
     private String name="Default name";
     private String birth="Default birth";
     {
         name ="default";
     }
 
-    public Rector(String fullName, String birthday){
+    public Person(String fullName, String birthday){
         name=fullName;
         birth=birthday;
     }
 
-    public Rector(){}
+    public Person(){}
 
-    public String fullName(){
-        return getName();
-    }
+    /*public String fullName(){
+        return getPlaceOfBirth();
+    }*/
 
     /*public void saveState(Object obj) throws IOException {
         FileOutputStream fos = new FileOutputStream(fullName()+".out");
@@ -36,21 +31,21 @@ public class Rector extends SecureObjectRoot{
     }*/
 
     //---------------getters generated----------------
-    public String getName() {
+    public String getPlaceOfBirth() {
         return name;
     }
 
-    public String getBirth() {
+    public String getPlaceOfResidence() {
         return birth;
     }
 
     //---------------setters generated----------------
 
-    public void setName(String name) {
+    public void setPlaceOfBirth(String name) {
         this.name = name;
     }
 
-    public void setBirth(String birth) {
+    public void setPlaceOfResidence(String birth) {
         this.birth = birth;
     }
     }

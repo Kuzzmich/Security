@@ -1,7 +1,8 @@
 <begin>
 com.company.AcademicPlan
 com.company.SecureObjectRoot
-com.company.Rector true true true false true
-com.company.Director true true true false true
-com.company.HeadOfDep true true true false true
+com.company.Person true true true false true
+com.company.LocalPerson true true true false true
+com.company.Employee true true true false true
+com.company.Teacher true true true true true
 <end>

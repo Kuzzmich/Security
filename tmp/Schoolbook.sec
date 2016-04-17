@@ -1,6 +1,7 @@
 <begin>
-com.company.Teacher
-com.company.Employee
+com.company.Schoolbook
+com.company.SecureObjectRoot
+com.company.Learner true true true true true
 com.company.Person true true true false true
 com.company.LocalPerson true true true false true
 com.company.Employee true true true false true

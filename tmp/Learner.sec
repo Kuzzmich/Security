@@ -1,7 +1,7 @@
 <begin>
-com.company.Teacher
-com.company.Employee
+com.company.Learner
+com.company.LocalPerson
 com.company.Person true true true false true
 com.company.LocalPerson true true true false true
-com.company.Employee true true true false true
+com.company.Employee true true true true true
 <end>

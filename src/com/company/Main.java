@@ -1,8 +1,6 @@
 package com.company;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
 import java.util.Scanner;
 import java.io.IOException;
 
@@ -16,18 +14,17 @@ public class Main {
             sc.close();
         }*/
 
-        Rector rc = new Rector("Gus", "default");
+        Person rc = new Person("Gus", "default");
 
         /*Scanner sc = new Scanner(System.in);
         String name = sc.next();*/
 
 
-        Director d = new Director("Chip", "4486");
-        HeadOfDep h = new HeadOfDep("Sug", "4576");
+        LocalPerson d = new LocalPerson("Chip", "4486");
+        Employee h = new Employee("Sug", "4576");
         Teacher t = new Teacher("Linets", "4576");
-        Group gr = new Group("ИБС-121", 21);
         Student s = new Student("Martiros", "2222");
-        Journal j = new Journal("Electro", "1234");
+        Schedule j = new Schedule("Electro", "1234");
         AcademicPlan ap = new AcademicPlan("Plan", "2016");
 
         add(rc, d, true, true, false);

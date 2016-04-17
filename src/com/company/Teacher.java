@@ -3,41 +3,35 @@ package com.company;
 /**
  * Created by Алексей on 07.03.2016.
  */
-public class Teacher extends HeadOfDep {
-    private String name;
-    private String birth;
+public class Teacher extends Employee {
+    private String institute;
+    private String instituteDepartment;
 
     public Teacher(){}
 
-    public Teacher(String fullName, String birthday) {
-        this.name = fullName;
-        this.birth = birthday;
+    public Teacher(String institute, String instituteDepartment) {
+        this.institute = institute;
+        this.instituteDepartment = instituteDepartment;
     }
 
-    public String fullName(){
-        return getName();
-    }
+    /*public String fullName(){
+        return getPlaceOfBirth();
+    }*/
     //--------getters generated--------
-
-    @Override
-    public String getName() {
-        return name;
+    public String getInstitute() {
+        return institute;
     }
 
-    @Override
-    public String getBirth() {
-        return birth;
+    public String getInstituteDepartment() {
+        return instituteDepartment;
     }
 
     //--------getters generated--------
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
+    public void setInstitute(String institute) {
+        this.institute = institute;
     }
 
-    @Override
-    public void setBirth(String birth) {
-        this.birth = birth;
+    public void setInstituteDepartment(String instituteDepartment) {
+        this.instituteDepartment = instituteDepartment;
     }
 }

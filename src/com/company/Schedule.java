@@ -3,16 +3,16 @@ package com.company;
 /**
  * Created by Алексей on 07.03.2016.
  */
-public class Journal extends SecureObjectRoot{
+public class Schedule extends SecureObjectRoot{
     private String name;
     private String dateOfApproval;
     {
         name ="default";
     }
 
-    public Journal(){}
+    public Schedule(){}
 
-    public  Journal(String nameOfJ, String date){
+    public Schedule(String nameOfJ, String date){
         name=nameOfJ;
         dateOfApproval=date;
     }

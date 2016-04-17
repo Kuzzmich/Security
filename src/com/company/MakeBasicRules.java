@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * Created by Алексей on 13.03.2016.
  */
-public class MakeBasicRules extends SecureObjectRoot {
+public class MakeBasicRules{
     // список пройденных классов
     ArrayList<String> doneClasses=new ArrayList<>();
     SecurityMonitor monitor = new SecurityMonitor(new SecureObjectContainer());

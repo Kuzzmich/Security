@@ -1,5 +1,5 @@
 <begin>
-com.company.Schedule
+com.company.Journal
 com.company.SecureObjectRoot
 com.company.Person true true true false true
 com.company.LocalPerson true true true false true

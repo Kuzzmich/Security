@@ -24,7 +24,7 @@ public class Main {
         Employee h = new Employee("Sug", "4576");
         Teacher t = new Teacher("Linets", "4576");
         Student s = new Student("Martiros", "2222");
-        Schedule j = new Schedule("Electro", "1234");
+        Journal j = new Journal("Electro", "1234");
         AcademicPlan ap = new AcademicPlan("Plan", "2016");
 
         add(rc, d, true, true, false);

@@ -18,6 +18,7 @@ public class SecurityMonitor {
         currentRules=new HashMap<SecureObjectPair,SecurityRights>();
     }
     private SecureObjectContainer container;
+    private SecurityLogger logger=SecurityLogger.getInstance();
 
     public SecurityMonitor(){}
     public SecurityMonitor(SecureObjectContainer cont) {
@@ -102,6 +103,7 @@ public class SecurityMonitor {
 
 
     //запрос на создание объекта
+
     public void createRequest(@NotNull SecureObjectRoot from, @NotNull SecureObjectRoot target)
             throws RestrictedByCurrentRulesException, RestrictedByDefaultRulesException{
         try {
@@ -109,8 +111,10 @@ public class SecurityMonitor {
             SecurityRights rights=getRights(from,target);
             if (rights.isCreate()){ //проверка на разрешенность создания
                 target.create();
+                logger.createRequestSuccess(from,target);
             }
             else {
+                logger.createRequestFailed(from,target);
                 if (rights.isSetbydefault())throw new RestrictedByCurrentRulesException();
                 else throw new RestrictedByDefaultRulesException();
             }
@@ -126,8 +130,10 @@ public class SecurityMonitor {
              if (rights.isDelete()){ //проверка на разрешенность удаления
                  target.delete();
                  container.removeObject(target);
+                 logger.deleteRequestSuccess(from,target);
              }
              else {
+                 logger.deleteRequestFailed(from,target);
                  if (rights.isSetbydefault())throw new RestrictedByCurrentRulesException();
                  else throw new RestrictedByDefaultRulesException();
              }
@@ -142,9 +148,11 @@ public class SecurityMonitor {
         try {
             SecurityRights rights=getRights(from,target);
             if (!rights.isUpdate()){ //проверка на разрешенность удаления
+                logger.deleteRequestFailed(from,target);
                 if (rights.isSetbydefault())throw new RestrictedByCurrentRulesException();
                 else throw new RestrictedByDefaultRulesException();
             }
+            logger.execRequestSuccess(from,target);
         } catch (SCClassNotDescribedException e) {
             e.printStackTrace();
         }

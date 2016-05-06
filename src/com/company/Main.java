@@ -1,6 +1,8 @@
 package com.company;
 
+import java.beans.XMLEncoder;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Scanner;
 import java.io.IOException;
 
@@ -34,34 +36,41 @@ public class Main {
         add(d, h, true, false, true);
         add(h, d, false, false, false);
 
+
         SecureObjectContainer container = new SecureObjectContainer();
-        /*try {
-            ObjectInputStream oi=new ObjectInputStream(new FileInputStream("collection.dat"));
-            container=oi.readObject();
-        }*/
         monitor.attachContainer(container);
+        monitor.addObjectToContainerRoot(rc);
 
         try {
-            Scanner sc=new Scanner(System.in);
-            File f=new File(sc.next());
-            MakeBasicRules mbr=new MakeBasicRules();
-            mbr.makeRules(f);
-//            monitor.createRequest(rc, d);
+
+            monitor.createRequest(rc, d);
             SecureObjectPair pair=new SecureObjectPair(rc,d);
-           // System.out.println(monitor.addCurrentRule(pair, new SecurityRights(false, false, false,true)));
-          //  System.out.println(monitor.addCurrentRule(pair, new SecurityRights(false, false, true, true)));
+//            System.out.println(monitor.addCurrentRule(pair, new SecurityRights(false, false, false,true)));
+//            System.out.println(monitor.addCurrentRule(pair, new SecurityRights(false, false, true, true)));
             loadOrSave(new File("default.dat"));
             loadOrSaveCurrent(new File("current.dat"));
+            XMLEncoder e=new XMLEncoder(new FileOutputStream("out.xml"));
+            e.writeObject(monitor.getBaseRules());
+            e.close();
+            d.update(rc, monitor);
+            monitor.createRequest(rc, h);
+            monitor.deleteRequest(rc, h);
+
+
+
         } catch (Exception e) {
             e.printStackTrace();
+
         }
+        SecurityLogger logger=SecurityLogger.getInstance();
+        logger.close();
     }
 
     public static void add(SecureObjectRoot from, SecureObjectRoot to,boolean create,boolean update,boolean delete){
 
         Class <?> frm=from.getClass();
         Class <?> too=to.getClass();
-        SecurityRights rights=new SecurityRights(create,update,delete,false,false);
+        SecurityRights rights=new SecurityRights(create,update,delete,true,true);
 
         try {
             SecureObjectRoot fromObj=(SecureObjectRoot)frm.newInstance();

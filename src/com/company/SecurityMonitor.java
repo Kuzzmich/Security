@@ -229,7 +229,8 @@ public class SecurityMonitor {
             SecureObjectPair defaultPair=new SecureObjectPair(fromObject,toObject); //создан из временных объектов для получения базовых прав
 
             if (baseRules.containsKey(defaultPair))return baseRules.get(defaultPair);
-            else throw new SCClassNotDescribedException();
+            //else throw new SCClassNotDescribedException();
+            else return new SecurityRights(false,false,false,false,true);
 
         } catch (InstantiationException e) {
             e.printStackTrace();

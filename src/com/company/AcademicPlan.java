@@ -12,8 +12,8 @@ public class AcademicPlan extends SecureObjectRoot{
 
     public AcademicPlan(){}
 
-    public  AcademicPlan(String nameOfJ, String date){
-        name=nameOfJ;
+    public  AcademicPlan(String nameOfPlan, String date){
+        name=nameOfPlan;
         dateOfApproval=date;
     }
 

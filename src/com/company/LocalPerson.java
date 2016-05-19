@@ -42,4 +42,8 @@ public class LocalPerson extends Person {
     public void setPlaceOfResidence(String placeOfResidence) {
         this.placeOfResidence = placeOfResidence;
     }
+    @Override
+    public String fullName(){
+        return placeOfBirth;
+    }
 }

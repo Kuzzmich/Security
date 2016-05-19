@@ -97,6 +97,8 @@ public class SecurityMonitor {
     }
 
     public void addObjectToContainerRoot(SecureObjectRoot target){
+        SecurityLogger logger=SecurityLogger.getInstance();
+        logger.createRequestSuccess(null,target);
         container.addObject(target);
 
     }
@@ -148,7 +150,7 @@ public class SecurityMonitor {
         try {
             SecurityRights rights=getRights(from,target);
             if (!rights.isUpdate()){ //проверка на разрешенность удаления
-                logger.deleteRequestFailed(from,target);
+                logger.execRequestFailed(from, target);
                 if (rights.isSetbydefault())throw new RestrictedByCurrentRulesException();
                 else throw new RestrictedByDefaultRulesException();
             }

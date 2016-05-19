@@ -5,12 +5,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Scanner;
 import java.io.IOException;
-
+import java.util.Random;
 
 public class Main {
     public static SecurityMonitor monitor=new SecurityMonitor();
     public static SecureObjectContainer container = new SecureObjectContainer();
-
+    private static Random random=new Random();
     public static void main(String[] args) {
         File defaultRules=new File("default.dat");
         defaultRulesFile();
@@ -64,6 +64,7 @@ public class Main {
         initialRules.makeRules(f);
     }
 
+
     public static void monitorInitialize(){
         monitor.attachContainer(container);
         LocalPerson localPerson=new LocalPerson("birth1", "residence1");
@@ -90,7 +91,7 @@ public class Main {
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
         }
-
+        sleep();
         try {
             monitor.createRequest(person1, employee1);
         } catch (RestrictedByCurrentRulesException e) {
@@ -98,7 +99,7 @@ public class Main {
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
         }
-
+        sleep();
         monitor.addObjectToContainerRoot(localPerson);
         try {
             monitor.createRequest(localPerson, academicPlan);
@@ -107,7 +108,7 @@ public class Main {
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
         }
-
+        sleep();
         try {
             monitor.createRequest(localPerson, employee2);
         } catch (RestrictedByCurrentRulesException e) {
@@ -115,7 +116,7 @@ public class Main {
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
         }
-
+        sleep();
         try {
             monitor.createRequest(localPerson, person2);
         } catch (RestrictedByCurrentRulesException e) {
@@ -123,7 +124,7 @@ public class Main {
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
         }
-
+        sleep();
         monitor.addObjectToContainerRoot(localPerson2);
         try {
             monitor.createRequest(localPerson2, learner1);
@@ -132,7 +133,7 @@ public class Main {
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
         }
-
+        sleep();
         try {
             monitor.createRequest(localPerson2, learner2);
         } catch (RestrictedByCurrentRulesException e) {
@@ -140,7 +141,7 @@ public class Main {
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
         }
-
+        sleep();
         try {
             monitor.createRequest(localPerson2, journal);
         } catch (RestrictedByCurrentRulesException e) {
@@ -148,7 +149,7 @@ public class Main {
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
         }
-
+        sleep();
         try {
             monitor.createRequest(localPerson2, student);
         } catch (RestrictedByCurrentRulesException e) {
@@ -156,12 +157,213 @@ public class Main {
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
         }
-
+        sleep();
         try {
             monitor.createRequest(localPerson2, teacher);
         } catch (RestrictedByCurrentRulesException e) {
             e.printStackTrace();
         } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Monitored objects:");
+        container.getObjects().stream().forEach(item -> System.out.println("Object: " + item.getClass() + " : " + item.fullName()));
+//        --------------------------==============================----------------------
+        sleep();
+        try {
+            localPerson.update(localPerson2,monitor);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+
+        sleep();
+        try {
+            journal.update(localPerson,monitor);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+
+        sleep();
+        try {
+            journal.update(localPerson2,monitor);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+
+        sleep();
+        try {
+            student.update(teacher,monitor);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+
+        sleep();
+        try {
+            student.update(teacher,monitor);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+
+        sleep();
+        try {
+            learner1.update(student,monitor);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+
+        sleep();
+        try {
+            learner2.update(student,monitor);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+
+        sleep();
+        try {
+            person1.update(localPerson,monitor);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+
+        sleep();
+        try {
+            person2.update(localPerson,monitor);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+
+        sleep();
+        try {
+            employee1.update(localPerson,monitor);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+
+        sleep();
+        try {
+            employee2.update(localPerson,monitor);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+
+        sleep();
+        try {
+            academicPlan.update(teacher,monitor);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+
+        sleep();
+        try {
+            academicPlan.update(schoolbook,monitor);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+
+        sleep();
+        try {
+            schoolbook.update(student, monitor);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+//---------------------------------==================================------------------------------
+
+        sleep();
+        try {
+            monitor.deleteRequest(localPerson,employee1);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+
+        sleep();
+        try {
+            monitor.deleteRequest(localPerson2,employee2);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+
+        sleep();
+        try {
+            monitor.deleteRequest(learner1,schoolbook);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+
+        sleep();
+        try {
+           monitor.deleteRequest(teacher,academicPlan);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+
+        sleep();
+        try {
+            monitor.deleteRequest(person1,localPerson);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+
+        sleep();
+        try {
+            monitor.deleteRequest(person1,learner1);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Monitored objects:");
+        container.getObjects().stream().forEach(item -> System.out.println("Object: " + item.getClass() + " : " + item.fullName()));
+        //----------------======================--------------------
+
+
+
+
+
+
+
+    }
+    private static void sleep(){
+        try {
+            Thread.sleep(random.nextInt(1000));
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

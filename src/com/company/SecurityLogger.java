@@ -38,10 +38,15 @@ public class SecurityLogger {
     }
 
     public void createRequestSuccess(SecureObjectRoot from, SecureObjectRoot to){
-        println(getDate()+" Create request provided. Caller: "+cutName(from.getClass().getName())+": "+from.fullName()+"; Target: "+cutName(to.getClass().getName())+": "+to.fullName()+";");
-
-
-
+        if (from!=null) println(getDate()+" Create request provided. Caller: "
+                +cutName(from.getClass().getName())+": "
+                +from.fullName()+"; Target: "
+                +cutName(to.getClass().getName())
+                +": "+to.fullName()+";");
+        else
+            println(getDate()+" Create request provided. Caller: Root : RootObject; Target: "
+                    +cutName(to.getClass().getName())
+                    +": "+to.fullName()+";");
     }
 
 

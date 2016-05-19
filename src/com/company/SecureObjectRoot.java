@@ -7,17 +7,17 @@ import java.io.*;
  */
 public  class SecureObjectRoot implements ISecureObj, Serializable{
     public final void create(){
-        System.out.println(this.toString()+" "+this.fullName()+" was created");
+//        System.out.println(this.toString()+" "+this.fullName()+" was created");
     }
 
     public final void delete(){
-        System.out.println(this.toString()+" was deleted");
+//        System.out.println(this.toString()+" was deleted");
     }
 
     public final void update(SecureObjectRoot from,SecurityMonitor monitor)
             throws RestrictedByCurrentRulesException, RestrictedByDefaultRulesException{
         monitor.methodExecRequest(from,this);
-        System.out.println(this.toString()+" method calls");
+//        System.out.println(this.toString()+" method calls");
     }
 
     public void saveState() throws IOException {

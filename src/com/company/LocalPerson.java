@@ -18,29 +18,28 @@ public class LocalPerson extends Person {
 
     @Override
     public String fullName(){
-        return getName();
+        return getPlaceOfBirth();
     }
 
     //--------getters generated--------
-    @Override
-    public String getName() {
+    public String getPlaceOfBirth() {
         return placeOfBirth;
     }
 
     @Override
-    public String getPlaceOfResidence() {
+    public String getBirth() {
         return placeOfResidence;
     }
 
     //--------getters generated--------
 
     @Override
-    public void setPlaceOfBirth(String placeOfBirth) {
+    public void setName(String placeOfBirth) {
         this.placeOfBirth = placeOfBirth;
     }
 
     @Override
-    public void setPlaceOfResidence(String placeOfResidence) {
+    public void setBirth(String placeOfResidence) {
         this.placeOfResidence = placeOfResidence;
     }
 }

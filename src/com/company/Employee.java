@@ -30,11 +30,11 @@ public class Employee extends LocalPerson {
     }
 
     //--------getters generated--------
-    public void setPlaceOfBirth(String placeBirth) {
+    public void setName(String placeBirth) {
         this.department = placeBirth;
     }
 
-    public void setPlaceOfResidence(String placeResidence) {
+    public void setBirth(String placeResidence) {
         this.status = placeResidence;
     }
 }

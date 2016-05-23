@@ -35,17 +35,17 @@ public class Person extends SecureObjectRoot{
         return name;
     }
 
-    public String getPlaceOfResidence() {
+    public String getBirth() {
         return birth;
     }
 
     //---------------setters generated----------------
 
-    public void setPlaceOfBirth(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setPlaceOfResidence(String birth) {
+    public void setBirth(String birth) {
         this.birth = birth;
     }
     }

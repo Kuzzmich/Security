@@ -18,9 +18,9 @@ public class Person extends SecureObjectRoot{
 
     public Person(){}
 
-    /*public String fullName(){
-        return getPlaceOfBirth();
-    }*/
+    public String fullName(){
+        return getName();
+    }
 
     /*public void saveState(Object obj) throws IOException {
         FileOutputStream fos = new FileOutputStream(fullName()+".out");
@@ -31,7 +31,7 @@ public class Person extends SecureObjectRoot{
     }*/
 
     //---------------getters generated----------------
-    public String getPlaceOfBirth() {
+    public String getName() {
         return name;
     }
 

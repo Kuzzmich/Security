@@ -16,6 +16,9 @@ public class Learner extends LocalPerson {
         dateOfBeginTraining=beginTraining;
     }
 
+    public String fullName(){
+        return getTrainingPrograms();
+    }
     //--------getters generated--------
     public String getTrainingPrograms() {
         return trainingPrograms;

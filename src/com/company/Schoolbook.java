@@ -13,6 +13,10 @@ public class Schoolbook extends SecureObjectRoot{
         this.name=name;
         this.author=author;
     }
+
+    public String fullName(){
+        return getName();
+    }
     //--------getters generated--------
     public String getName() {
         return name;

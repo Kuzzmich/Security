@@ -16,13 +16,14 @@ public class LocalPerson extends Person {
         this.placeOfResidence = placeResidence;
     }
 
-   /* public String fullName(){
-        return getPlaceOfBirth();
-    }*/
-    //--------getters generated--------
-
     @Override
-    public String getPlaceOfBirth() {
+    public String fullName(){
+        return getName();
+    }
+
+    //--------getters generated--------
+    @Override
+    public String getName() {
         return placeOfBirth;
     }
 
@@ -41,9 +42,5 @@ public class LocalPerson extends Person {
     @Override
     public void setPlaceOfResidence(String placeOfResidence) {
         this.placeOfResidence = placeOfResidence;
-    }
-    @Override
-    public String fullName(){
-        return placeOfBirth;
     }
 }

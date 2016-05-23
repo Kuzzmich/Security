@@ -14,9 +14,9 @@ public class Teacher extends Employee {
         this.instituteDepartment = instituteDepartment;
     }
 
-    /*public String fullName(){
-        return getPlaceOfBirth();
-    }*/
+    public String fullName(){
+        return getInstituteDepartment();
+    }
     //--------getters generated--------
     public String getInstitute() {
         return institute;

@@ -17,9 +17,9 @@ public class Employee extends LocalPerson {
         this.status = birthday;
     }
 
-    /*public String fullName(){
-        return getPlaceOfBirth();
-    }*/
+    public String fullName(){
+        return getDepartment();
+    }
     //--------getters generated--------
     public String getDepartment() {
         return department;

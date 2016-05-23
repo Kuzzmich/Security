@@ -14,9 +14,9 @@ public class Student extends Learner {
         this.group = group;
     }
 
-    /*public String fullName(){
-        return getPlaceOfBirth();
-    }*/
+    public String fullName(){
+        return getInstitute();
+    }
     //--------getters generated--------
     public String getInstitute() {
         return institute;

@@ -84,6 +84,16 @@ public class Main {
         //========================
 
         monitor.addObjectToContainerRoot(person1);
+
+        try {
+            monitor.createRequest(person1,teacher);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+        sleep();
+
         try {
             monitor.createRequest(person1,schoolbook);
         } catch (RestrictedByCurrentRulesException e) {
@@ -157,14 +167,14 @@ public class Main {
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
         }
-        sleep();
+        /*sleep();
         try {
             monitor.createRequest(localPerson2, teacher);
         } catch (RestrictedByCurrentRulesException e) {
             e.printStackTrace();
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
-        }
+        }*/
         System.out.println("Monitored objects:");
         container.getObjects().stream().forEach(item -> System.out.println("Object: " + item.getClass() + " : " + item.fullName()));
 //        --------------------------==============================----------------------
@@ -195,23 +205,23 @@ public class Main {
             e.printStackTrace();
         }
 
-        sleep();
+       /* sleep();
         try {
             student.update(teacher,monitor);
         } catch (RestrictedByCurrentRulesException e) {
             e.printStackTrace();
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
-        }
+        }*/
 
-        sleep();
+        /*sleep();
         try {
             student.update(teacher,monitor);
         } catch (RestrictedByCurrentRulesException e) {
             e.printStackTrace();
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
-        }
+        }*/
 
         sleep();
         try {
@@ -267,14 +277,14 @@ public class Main {
             e.printStackTrace();
         }
 
-        sleep();
+        /*sleep();
         try {
             academicPlan.update(teacher,monitor);
         } catch (RestrictedByCurrentRulesException e) {
             e.printStackTrace();
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
-        }
+        }*/
 
         sleep();
         try {
@@ -322,14 +332,14 @@ public class Main {
             e.printStackTrace();
         }
 
-        sleep();
+        /*sleep();
         try {
            monitor.deleteRequest(teacher,academicPlan);
         } catch (RestrictedByCurrentRulesException e) {
             e.printStackTrace();
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
-        }
+        }*/
 
         sleep();
         try {

@@ -10,7 +10,6 @@ public class Teacher extends Employee {
     public Teacher(){}
 
     public Teacher(String name, String institute, String instituteDepartment) {
-        super(name, "default", "default");
         this.institute = institute;
         this.instituteDepartment = instituteDepartment;
     }

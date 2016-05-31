@@ -5,7 +5,7 @@ package com.company;
  */
 
 public class Person extends SecureObjectRoot{
-    private String name="Default name";
+    protected String name="Default name";
     private String birth="Default birth";
     {
         name ="default";

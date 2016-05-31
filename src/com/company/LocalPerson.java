@@ -12,7 +12,6 @@ public class LocalPerson extends Person {
     public LocalPerson(){}
 
     public LocalPerson(String name, String placeBirth, String placeResidence) {
-        super.setName(name);
         this.placeOfBirth = placeBirth;
         this.placeOfResidence = placeResidence;
     }
@@ -34,13 +33,11 @@ public class LocalPerson extends Person {
 
     //--------getters generated--------
 
-    @Override
-    public void setName(String placeOfBirth) {
+    public void setPlaceOfBirth(String placeOfBirth) {
         this.placeOfBirth = placeOfBirth;
     }
 
-    @Override
-    public void setBirth(String placeOfResidence) {
+    public void setPlaceOfResidence(String placeOfResidence) {
         this.placeOfResidence = placeOfResidence;
     }
 }

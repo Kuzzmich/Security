@@ -13,7 +13,7 @@ public class Employee extends LocalPerson {
     public Employee(){}
 
     public Employee(String name, String fullName, String birthday) {
-        super(name, "default", "default");
+
         this.department = fullName;
         this.status = birthday;
     }
@@ -31,11 +31,11 @@ public class Employee extends LocalPerson {
     }
 
     //--------getters generated--------
-    public void setName(String placeBirth) {
+    public void setPlaceBirth(String placeBirth) {
         this.department = placeBirth;
     }
 
-    public void setBirth(String placeResidence) {
+    public void setPplaceResidence(String placeResidence) {
         this.status = placeResidence;
     }
 }

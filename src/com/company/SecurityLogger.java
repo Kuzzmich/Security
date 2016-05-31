@@ -78,7 +78,7 @@ public class SecurityLogger {
     public void close(){
         writer.close();
     }
-    private String cutName(String classname){
+    public static String cutName(String classname){
         int index=classname.lastIndexOf('.');
         if (index!=-1)return classname.substring(index+1);
         else return classname;

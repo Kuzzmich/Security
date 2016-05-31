@@ -12,13 +12,14 @@ public class Employee extends LocalPerson {
 
     public Employee(){}
 
-    public Employee(String fullName, String birthday) {
+    public Employee(String name, String fullName, String birthday) {
+        super(name, "default", "default");
         this.department = fullName;
         this.status = birthday;
     }
 
     public String fullName(){
-        return getDepartment();
+        return super.getName();
     }
     //--------getters generated--------
     public String getDepartment() {

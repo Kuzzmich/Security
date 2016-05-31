@@ -67,19 +67,19 @@ public class Main {
 
     public static void monitorInitialize(){
         monitor.attachContainer(container);
-        LocalPerson localPerson=new LocalPerson("birth1", "residence1");
-        LocalPerson localPerson2=new LocalPerson("birth2", "residence2");
+        LocalPerson localPerson=new LocalPerson("LocalName1","birth1", "residence1");
+        LocalPerson localPerson2=new LocalPerson("LocalName2","birth2", "residence2");
         Journal journal=new Journal("nameOfJournal1", "21.01.01");
-        Learner learner1=new Learner("trainProgram1","21.02.02");
-        Learner learner2=new Learner("trainProgram2","21.02.02");
-        Employee employee1=new Employee("fullNameEmployee1", "01.01.01");
-        Employee employee2=new Employee("fullNameEmployee2", "02.02.01");
+        Learner learner1=new Learner("LearnerName1","trainProgram1","21.02.02");
+        Learner learner2=new Learner("LearnerName2","trainProgram2","21.02.02");
+        Employee employee1=new Employee("EmployeeName1","DeptEmployee1", "01.01.01");
+        Employee employee2=new Employee("EmployeeName2","DeptEmployee2", "02.02.01");
         AcademicPlan academicPlan=new AcademicPlan("nameOfPlan1", "21.10.01");
         Schoolbook schoolbook=new Schoolbook("schoolbookName","author");
         Person person1=new Person("personFullname1", "12.12.00");
         Person person2=new Person("personFullname2", "12.12.12");
-        Student student=new Student("IITT","IBAS");
-        Teacher teacher=new Teacher("IITT","Stavropol");
+        Student student=new Student("StudentName1","IITT","IBAS");
+        Teacher teacher=new Teacher("TeacherName2","IITT","Stavropol");
 
         //========================
 
@@ -352,7 +352,23 @@ public class Main {
         System.out.println("Monitored objects:");
         container.getObjects().stream().forEach(item -> System.out.println("Object: " + item.getClass() + " : " + item.fullName()));
         //----------------======================--------------------
+        System.out.printf("%-20s %-20s %-20s %-20s %-10s %-10s %-10s %-10s %-10s\n","First class", "Name", "Second Class", "Name", "Create","Update","Delete","IsDerived","IsSetByDefault");
+        monitor.getCurrentRules().entrySet().stream().forEach(x->
+            {
+                String first=SecurityLogger.cutName(x.getKey().getFirst().getClass().getName());
+                String second=SecurityLogger.cutName(x.getKey().getSecond().getClass().getName());
 
+                String firstName=x.getKey().getFirst().fullName();
+                String secondName=x.getKey().getSecond().fullName();
+                SecurityRights value=x.getValue();
+                String rights=String.format("%-10s %-10s %-10s %-10s %-10s",value.isCreate(),
+                        value.isUpdate(), value.isDelete(), value.isDerived(),value.isSetbydefault());
+
+                System.out.printf("%-20s %-20s %-20s %-20s %s\n",first,firstName,second,secondName,rights);
+
+
+            }
+        );
 
 
 
@@ -362,7 +378,7 @@ public class Main {
     }
     private static void sleep(){
         try {
-            Thread.sleep(random.nextInt(1000));
+            Thread.sleep(random.nextInt(1));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

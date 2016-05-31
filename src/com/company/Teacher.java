@@ -9,13 +9,14 @@ public class Teacher extends Employee {
 
     public Teacher(){}
 
-    public Teacher(String institute, String instituteDepartment) {
+    public Teacher(String name, String institute, String instituteDepartment) {
+        super(name, "default", "default");
         this.institute = institute;
         this.instituteDepartment = instituteDepartment;
     }
 
     public String fullName(){
-        return getInstituteDepartment();
+        return super.getName();
     }
     //--------getters generated--------
     public String getInstitute() {

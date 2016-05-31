@@ -11,13 +11,14 @@ public class Learner extends LocalPerson {
     }
     public Learner(){}
 
-    public Learner(String trainProgram, String beginTraining){
+    public Learner(String name, String trainProgram, String beginTraining){
+        super(name, "default", "default");
         trainingPrograms = trainProgram;
         dateOfBeginTraining=beginTraining;
     }
 
     public String fullName(){
-        return getTrainingPrograms();
+        return super.getName();
     }
     //--------getters generated--------
     public String getTrainingPrograms() {

@@ -9,13 +9,14 @@ public class Student extends Learner {
 
     public Student(){}
 
-    public Student(String institute, String group) {
+    public Student(String name, String institute, String group) {
+        super(name, "default", "default");
         this.institute = institute;
         this.group = group;
     }
 
     public String fullName(){
-        return getInstitute();
+        return super.getName();
     }
     //--------getters generated--------
     public String getInstitute() {

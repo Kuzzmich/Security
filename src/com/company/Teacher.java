@@ -10,6 +10,7 @@ public class Teacher extends Employee {
     public Teacher(){}
 
     public Teacher(String name, String institute, String instituteDepartment) {
+        super.setName(name);
         this.institute = institute;
         this.instituteDepartment = instituteDepartment;
     }

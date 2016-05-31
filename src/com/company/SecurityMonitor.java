@@ -117,6 +117,7 @@ public class SecurityMonitor {
             }
             else {
                 logger.createRequestFailed(from,target);
+                container.removeObject(target);
                 if (rights.isSetbydefault())throw new RestrictedByCurrentRulesException();
                 else throw new RestrictedByDefaultRulesException();
             }

@@ -12,7 +12,7 @@ public class Learner extends LocalPerson {
     public Learner(){}
 
     public Learner(String name, String trainProgram, String beginTraining){
-
+        super.setName(name);
         trainingPrograms = trainProgram;
         dateOfBeginTraining=beginTraining;
     }

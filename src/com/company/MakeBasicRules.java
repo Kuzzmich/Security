@@ -104,7 +104,7 @@ public class MakeBasicRules{
     }
 // Запись правил в файл
     private void writeRulesToFile(){
-        monitor.getBaseRules().entrySet().forEach(System.out::println);
+        //monitor.getBaseRules().entrySet().forEach(System.out::println);
         File out = new File("default.dat");
         if (out.exists()) try {
             monitor.loadDefaultRules(out);

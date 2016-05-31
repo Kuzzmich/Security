@@ -10,7 +10,7 @@ public class Student extends Learner {
     public Student(){}
 
     public Student(String name, String institute, String group) {
-
+        super.setName(name);
         this.institute = institute;
         this.group = group;
     }

@@ -12,6 +12,7 @@ public class LocalPerson extends Person {
     public LocalPerson(){}
 
     public LocalPerson(String name, String placeBirth, String placeResidence) {
+        super.setName(name);
         this.placeOfBirth = placeBirth;
         this.placeOfResidence = placeResidence;
     }

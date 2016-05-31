@@ -71,7 +71,7 @@ public class Main {
         LocalPerson localPerson2=new LocalPerson("LocalName2","birth2", "residence2");
         Journal journal=new Journal("nameOfJournal1", "21.01.01");
         Learner learner1=new Learner("LearnerName1","trainProgram1","21.02.02");
-        Learner learner2=new Learner("LearnerName2","trainProgram2","21.02.02");
+        Learner learner2=new Learner("LearnerName2","trainProgram2","22.02.02");
         Employee employee1=new Employee("EmployeeName1","DeptEmployee1", "01.01.01");
         Employee employee2=new Employee("EmployeeName2","DeptEmployee2", "02.02.01");
         AcademicPlan academicPlan=new AcademicPlan("nameOfPlan1", "21.10.01");
@@ -84,16 +84,6 @@ public class Main {
         //========================
 
         monitor.addObjectToContainerRoot(person1);
-
-        try {
-            monitor.createRequest(person1,teacher);
-        } catch (RestrictedByCurrentRulesException e) {
-            e.printStackTrace();
-        } catch (RestrictedByDefaultRulesException e) {
-            e.printStackTrace();
-        }
-        sleep();
-
         try {
             monitor.createRequest(person1,schoolbook);
         } catch (RestrictedByCurrentRulesException e) {
@@ -167,14 +157,14 @@ public class Main {
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
         }
-        /*sleep();
+        sleep();
         try {
             monitor.createRequest(localPerson2, teacher);
         } catch (RestrictedByCurrentRulesException e) {
             e.printStackTrace();
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
-        }*/
+        }
         System.out.println("Monitored objects:");
         container.getObjects().stream().forEach(item -> System.out.println("Object: " + item.getClass() + " : " + item.fullName()));
 //        --------------------------==============================----------------------
@@ -205,23 +195,23 @@ public class Main {
             e.printStackTrace();
         }
 
-       /* sleep();
+        sleep();
         try {
             student.update(teacher,monitor);
         } catch (RestrictedByCurrentRulesException e) {
             e.printStackTrace();
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
-        }*/
+        }
 
-        /*sleep();
+        sleep();
         try {
             student.update(teacher,monitor);
         } catch (RestrictedByCurrentRulesException e) {
             e.printStackTrace();
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
-        }*/
+        }
 
         sleep();
         try {
@@ -277,14 +267,14 @@ public class Main {
             e.printStackTrace();
         }
 
-        /*sleep();
+        sleep();
         try {
             academicPlan.update(teacher,monitor);
         } catch (RestrictedByCurrentRulesException e) {
             e.printStackTrace();
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
-        }*/
+        }
 
         sleep();
         try {
@@ -332,14 +322,14 @@ public class Main {
             e.printStackTrace();
         }
 
-        /*sleep();
+        sleep();
         try {
            monitor.deleteRequest(teacher,academicPlan);
         } catch (RestrictedByCurrentRulesException e) {
             e.printStackTrace();
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
-        }*/
+        }
 
         sleep();
         try {
@@ -379,16 +369,11 @@ public class Main {
 
             }
         );
-
-
-
-
-
-
     }
+
     private static void sleep(){
         try {
-            Thread.sleep(random.nextInt(1));
+            Thread.sleep(random.nextInt(1000));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

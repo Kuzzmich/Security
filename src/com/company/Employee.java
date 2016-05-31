@@ -13,7 +13,7 @@ public class Employee extends LocalPerson {
     public Employee(){}
 
     public Employee(String name, String fullName, String birthday) {
-
+        super.setName(name);
         this.department = fullName;
         this.status = birthday;
     }

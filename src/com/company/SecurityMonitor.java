@@ -97,7 +97,6 @@ public class SecurityMonitor {
     }
 
     private void removeObjectFromContainer(SecureObjectRoot target) throws SCClassNotDescribedException {
-        container.removeObject(target);
         List<SecureObjectRoot> lst=container.getObjects();
         for (SecureObjectRoot secureObject: lst){
                     SecureObjectPair pairFrom = new SecureObjectPair(target, secureObject);
@@ -105,7 +104,7 @@ public class SecurityMonitor {
                     removeCurrentRule(pairFrom);
                     removeCurrentRule(pairTo);
             }
-
+        container.removeObject(target);
     }
 
 
@@ -136,7 +135,7 @@ public class SecurityMonitor {
             }
             else {
                 logger.createRequestFailed(from,target);
-                container.removeObject(target);
+                removeObjectFromContainer(target);
                 if (rights.isSetbydefault())throw new RestrictedByCurrentRulesException();
                 else throw new RestrictedByDefaultRulesException();
             }

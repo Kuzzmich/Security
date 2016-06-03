@@ -101,7 +101,7 @@ public class Main {
 
                 }
         );
-//        System.out.println("Count: "+monitor.getBaseRules().entrySet().stream().count());
+        System.out.println("Count: "+monitor.getBaseRules().entrySet().stream().count());
 
 
 
@@ -229,7 +229,7 @@ public class Main {
 
                 }
         );
-//        System.out.println("Count: "+monitor.getCurrentRules().entrySet().stream().count());
+        System.out.println("Count: "+monitor.getCurrentRules().entrySet().stream().count());
 //        --------------------------==============================----------------------
         sleep();
         try {
@@ -432,7 +432,7 @@ public class Main {
 
             }
         );
-//        System.out.println("Count: "+monitor.getCurrentRules().entrySet().stream().count());
+        System.out.println("Count: "+monitor.getCurrentRules().entrySet().stream().count());
 
 
 

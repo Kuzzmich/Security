@@ -96,6 +96,19 @@ public class SecurityMonitor {
         }
     }
 
+    private void removeObjectFromContainer(SecureObjectRoot target) throws SCClassNotDescribedException {
+        container.removeObject(target);
+        List<SecureObjectRoot> lst=container.getObjects();
+        for (SecureObjectRoot secureObject: lst){
+                    SecureObjectPair pairFrom = new SecureObjectPair(target, secureObject);
+                    SecureObjectPair pairTo = new SecureObjectPair(secureObject,target);
+                    removeCurrentRule(pairFrom);
+                    removeCurrentRule(pairTo);
+            }
+
+    }
+
+
     public void addObjectToContainerRoot(SecureObjectRoot target){
         SecurityLogger logger=SecurityLogger.getInstance();
         logger.createRequestSuccess(null,target);
@@ -109,6 +122,12 @@ public class SecurityMonitor {
     public void createRequest(@NotNull SecureObjectRoot from, @NotNull SecureObjectRoot target)
             throws RestrictedByCurrentRulesException, RestrictedByDefaultRulesException{
         try {
+            if (!container.getObjects().contains(from)){
+                logger.createRequestFailed(from,target);
+                container.removeObject(target);
+                throw new RestrictedByCurrentRulesException();
+
+            }
             addObjectToContainer(target);
             SecurityRights rights=getRights(from,target);
             if (rights.isCreate()){ //проверка на разрешенность создания
@@ -129,10 +148,15 @@ public class SecurityMonitor {
      public void deleteRequest(@NotNull SecureObjectRoot from, @NotNull SecureObjectRoot target)
              throws RestrictedByCurrentRulesException, RestrictedByDefaultRulesException{
          try {
+             if (!container.getObjects().contains(from)||!container.getObjects().contains(target)){
+                 logger.deleteRequestFailed(from, target);
+                 throw new RestrictedByCurrentRulesException();
+
+             }
              SecurityRights rights=getRights(from,target);
              if (rights.isDelete()){ //проверка на разрешенность удаления
                  target.delete();
-                 container.removeObject(target);
+                 removeObjectFromContainer(target);
                  logger.deleteRequestSuccess(from,target);
              }
              else {
@@ -149,6 +173,11 @@ public class SecurityMonitor {
     public void methodExecRequest(@NotNull SecureObjectRoot from, @NotNull SecureObjectRoot target)
             throws RestrictedByCurrentRulesException, RestrictedByDefaultRulesException{
         try {
+            if (!container.getObjects().contains(from)||!container.getObjects().contains(target)){
+                logger.execRequestFailed(from,target);
+                throw new RestrictedByCurrentRulesException();
+
+            }
             SecurityRights rights=getRights(from,target);
             if (!rights.isUpdate()){ //проверка на разрешенность удаления
                 logger.execRequestFailed(from, target);
@@ -173,6 +202,7 @@ public class SecurityMonitor {
         }
         else return OperationStatus.ST_FAILURE;
     }
+
 
     public OperationStatus removeCurrentRule(SecureObjectPair pair){
         if (currentRules.containsKey(pair)){

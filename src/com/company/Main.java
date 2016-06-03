@@ -50,6 +50,7 @@ public class Main {
             monitor.saveDefaultRules(file);
         }
         else monitor.loadDefaultRules(file);
+
     }
     public static void loadOrSaveCurrent(File file)throws IOException,ClassNotFoundException{
         if (!file.exists()){
@@ -71,7 +72,7 @@ public class Main {
         LocalPerson localPerson2=new LocalPerson("LocalName2","birth2", "residence2");
         Journal journal=new Journal("nameOfJournal1", "21.01.01");
         Learner learner1=new Learner("LearnerName1","trainProgram1","21.02.02");
-        Learner learner2=new Learner("LearnerName2","trainProgram2","22.02.02");
+        Learner learner2=new Learner("LearnerName2","trainProgram2","21.02.02");
         Employee employee1=new Employee("EmployeeName1","DeptEmployee1", "01.01.01");
         Employee employee2=new Employee("EmployeeName2","DeptEmployee2", "02.02.01");
         AcademicPlan academicPlan=new AcademicPlan("nameOfPlan1", "21.10.01");
@@ -81,9 +82,50 @@ public class Main {
         Student student=new Student("StudentName1","IITT","IBAS");
         Teacher teacher=new Teacher("TeacherName2","IITT","Stavropol");
 
+
+
+
+        //-------------------------
+        System.out.println("Base rules:");
+        System.out.printf("%-20s %-20s %-10s %-10s %-10s %-10s %-10s\n","FirsClass",  "SecondClass",  "Create","Update","Delete","IsDerived","IsSetByDefault");
+        monitor.getBaseRules().entrySet().stream().forEach(x->
+                {
+                    String first=SecurityLogger.cutName(x.getKey().getFirst().getClass().getName());
+                    String second=SecurityLogger.cutName(x.getKey().getSecond().getClass().getName());
+
+                    SecurityRights value=x.getValue();
+                    String rights=String.format("%-10s %-10s %-10s %-10s %-10s",value.isCreate(),
+                            value.isUpdate(), value.isDelete(), value.isDerived(),value.isSetbydefault());
+                    System.out.printf("%-20s %-20s %s\n",first,second,rights);
+
+
+                }
+        );
+//        System.out.println("Count: "+monitor.getBaseRules().entrySet().stream().count());
+
+
+
+
+
+
+
+
         //========================
 
+
+
+
         monitor.addObjectToContainerRoot(person1);
+
+        try {
+            monitor.createRequest(person1,teacher);
+        } catch (RestrictedByCurrentRulesException e) {
+            e.printStackTrace();
+        } catch (RestrictedByDefaultRulesException e) {
+            e.printStackTrace();
+        }
+        sleep();
+
         try {
             monitor.createRequest(person1,schoolbook);
         } catch (RestrictedByCurrentRulesException e) {
@@ -157,16 +199,37 @@ public class Main {
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
         }
-        sleep();
+        /*sleep();
         try {
             monitor.createRequest(localPerson2, teacher);
         } catch (RestrictedByCurrentRulesException e) {
             e.printStackTrace();
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
-        }
+        }*/
         System.out.println("Monitored objects:");
         container.getObjects().stream().forEach(item -> System.out.println("Object: " + item.getClass() + " : " + item.fullName()));
+
+
+        System.out.println("---------------------------------Current rules matrix:--------------------------------------------");
+        System.out.printf("%-20s %-20s %-20s %-20s %-10s %-10s %-10s %-10s %-10s\n","FirsClass", "Name", "SecondClass", "Name", "Create","Update","Delete","IsDerived","IsSetByDefault");
+        monitor.getCurrentRules().entrySet().stream().forEach(x->
+                {
+                    String first=SecurityLogger.cutName(x.getKey().getFirst().getClass().getName());
+                    String second=SecurityLogger.cutName(x.getKey().getSecond().getClass().getName());
+
+                    String firstName=x.getKey().getFirst().fullName();
+                    String secondName=x.getKey().getSecond().fullName();
+                    SecurityRights value=x.getValue();
+                    String rights=String.format("%-10s %-10s %-10s %-10s %-10s",value.isCreate(),
+                            value.isUpdate(), value.isDelete(), value.isDerived(),value.isSetbydefault());
+
+                    System.out.printf("%-20s %-20s %-20s %-20s %s\n",first,firstName,second,secondName,rights);
+
+
+                }
+        );
+//        System.out.println("Count: "+monitor.getCurrentRules().entrySet().stream().count());
 //        --------------------------==============================----------------------
         sleep();
         try {
@@ -195,23 +258,23 @@ public class Main {
             e.printStackTrace();
         }
 
-        sleep();
+       /* sleep();
         try {
             student.update(teacher,monitor);
         } catch (RestrictedByCurrentRulesException e) {
             e.printStackTrace();
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
-        }
+        }*/
 
-        sleep();
+        /*sleep();
         try {
             student.update(teacher,monitor);
         } catch (RestrictedByCurrentRulesException e) {
             e.printStackTrace();
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
-        }
+        }*/
 
         sleep();
         try {
@@ -267,14 +330,14 @@ public class Main {
             e.printStackTrace();
         }
 
-        sleep();
+        /*sleep();
         try {
             academicPlan.update(teacher,monitor);
         } catch (RestrictedByCurrentRulesException e) {
             e.printStackTrace();
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
-        }
+        }*/
 
         sleep();
         try {
@@ -322,14 +385,14 @@ public class Main {
             e.printStackTrace();
         }
 
-        sleep();
+        /*sleep();
         try {
            monitor.deleteRequest(teacher,academicPlan);
         } catch (RestrictedByCurrentRulesException e) {
             e.printStackTrace();
         } catch (RestrictedByDefaultRulesException e) {
             e.printStackTrace();
-        }
+        }*/
 
         sleep();
         try {
@@ -352,7 +415,7 @@ public class Main {
         System.out.println("Monitored objects:");
         container.getObjects().stream().forEach(item -> System.out.println("Object: " + item.getClass() + " : " + item.fullName()));
         //----------------======================--------------------
-        System.out.printf("%-20s %-20s %-20s %-20s %-10s %-10s %-10s %-10s %-10s\n","First class", "Name", "Second Class", "Name", "Create","Update","Delete","IsDerived","IsSetByDefault");
+        System.out.printf("%-20s %-20s %-20s %-20s %-10s %-10s %-10s %-10s %-10s\n","FirsClass", "Name", "SecondClass", "Name", "Create","Update","Delete","IsDerived","IsSetByDefault");
         monitor.getCurrentRules().entrySet().stream().forEach(x->
             {
                 String first=SecurityLogger.cutName(x.getKey().getFirst().getClass().getName());
@@ -369,11 +432,17 @@ public class Main {
 
             }
         );
-    }
+//        System.out.println("Count: "+monitor.getCurrentRules().entrySet().stream().count());
 
+
+
+
+
+
+    }
     private static void sleep(){
         try {
-            Thread.sleep(random.nextInt(1000));
+            Thread.sleep(random.nextInt(1));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
